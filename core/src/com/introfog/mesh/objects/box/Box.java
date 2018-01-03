@@ -65,14 +65,6 @@ public class Box extends GameObject{
 		return body.getBodyY ();
 	}
 	
-	protected float getBodyW (){
-		return body.getBodyW ();
-	}
-	
-	protected float getBodyH (){
-		return body.getBodyH ();
-	}
-	
 	protected float getSpriteX (){
 		return body.getSpriteX ();
 	}

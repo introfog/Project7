@@ -6,7 +6,8 @@ import com.introfog.mesh.body.AnimatedObject;
 import com.introfog.mesh.objects.GameObject;
 import com.introfog.mesh.objects.ObjectType;
 import com.introfog.mesh.objects.State;
-import com.introfog.messages.GameMessage;
+import com.introfog.mesh.objects.singletons.special.ObjectManager;
+import com.introfog.messages.*;
 
 public class Character extends GameObject{
 	protected static final float CHARACTER_W = UNIT;
@@ -44,18 +45,17 @@ public class Character extends GameObject{
 	protected Character (){ }
 	
 	
-	public static Character getFirstInstance (){
+	public static Character getInstance (){
 		return CharacterHolder.first;
-	}
-	
-	public static Character getSecondInstance (){
-		return CharacterHolder.second;
 	}
 	
 	
 	public void setSpritePosition (float x, float y){
 		body.setSpritePosition (x, y);
 		body.move (0, 0.25f);
+		ObjectManager.getInstance ().addMessage (new MoveMessage (this, 0, 0, getBodyX (),
+																  getBodyY (), getSpriteX (), getSpriteY (), getBodyW (),
+																  getBodyH ()));
 	}
 	
 	public CharacterName getName (){
@@ -110,14 +110,6 @@ public class Character extends GameObject{
 	
 	protected float getSpriteY (){
 		return body.getSpriteY ();
-	}
-	
-	protected float getSpriteW (){
-		return body.getSpriteW ();
-	}
-	
-	protected float getSpriteH (){
-		return body.getSpriteH ();
 	}
 	
 	protected void move (float deltaX, float deltaY){

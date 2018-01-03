@@ -4,13 +4,8 @@ import com.badlogic.gdx.utils.Pools;
 
 import com.introfog.mesh.body.BodyObject;
 import com.introfog.mesh.objects.singletons.special.ObjectManager;
-import com.introfog.messages.GameMessage;
-import com.introfog.messages.MessageType;
-import com.introfog.messages.MoveMessage;
-import com.introfog.messages.PushOutMessage;
-import com.introfog.render.DataRender;
-import com.introfog.render.LayerType;
-import com.introfog.render.Render;
+import com.introfog.messages.*;
+import com.introfog.render.*;
 
 public class Wall extends GameObject{
 	private static final float BODY_WALL_W = UNIT;

@@ -21,8 +21,8 @@ public class ObjectManager extends GameObject{
 	}
 	
 	private ObjectManager (){
-		messages = new LinkedList <GameMessage> ();
-		objects = new LinkedList <GameObject> ();
+		messages = new LinkedList <> ();
+		objects = new LinkedList <> ();
 		
 		Pools.set (Wall.class, new Pool <Wall> (200, 400){
 			@Override

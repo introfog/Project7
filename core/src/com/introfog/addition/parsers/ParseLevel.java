@@ -59,12 +59,7 @@ public abstract class ParseLevel extends ParseBasis{
 			break;
 		case "characters":
 			Character character;
-			if (x < GameSystem.SCREEN_W / 2){
-				character = Character.getFirstInstance ();
-			}
-			else{
-				character = Character.getSecondInstance ();
-			}
+			character = Character.getInstance ();
 			character.setSpritePosition (x, y);
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (character));
 			break;

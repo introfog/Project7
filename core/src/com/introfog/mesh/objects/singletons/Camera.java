@@ -6,8 +6,6 @@ import com.badlogic.gdx.math.Matrix4;
 import com.introfog.GameSystem;
 import com.introfog.mesh.objects.GameObject;
 import com.introfog.mesh.objects.ObjectType;
-import com.introfog.mesh.objects.character.Character;
-import com.introfog.mesh.objects.character.CharacterName;
 import com.introfog.messages.*;
 
 public class Camera extends GameObject{
@@ -34,10 +32,6 @@ public class Camera extends GameObject{
 		return camera.combined;
 	}
 	
-	public OrthographicCamera getCamera (){
-		return camera;
-	}
-	
 	@Override
 	public void update (){
 		camera.update ();
@@ -47,7 +41,7 @@ public class Camera extends GameObject{
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
-			camera.translate (0, msg.deltaY);
+			camera.position.set (msg.oldBodyX  + msg.deltaX + msg.bodyW / 2, msg.oldBodyY + msg.deltaY, 0);
 		}
 	}
 }

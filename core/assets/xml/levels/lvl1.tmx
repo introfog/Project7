@@ -100,8 +100,6 @@
   <object id="107" x="832" y="1008" width="64" height="48"/>
  </objectgroup>
  <objectgroup name="finishLevel">
-  <object id="150" x="1088" y="864" width="64" height="48"/>
-  <object id="151" x="512" y="960" width="64" height="48"/>
   <object id="183" x="64" y="480" width="1088" height="48"/>
  </objectgroup>
  <objectgroup name="invisibleWall">

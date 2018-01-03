@@ -3,6 +3,7 @@ package com.introfog.mesh.body;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import com.introfog.addition.math.Rectangle;
+import com.introfog.render.DataRender;
 
 public abstract class Body{
 	protected Rectangle body;
@@ -18,11 +19,6 @@ public abstract class Body{
 		return body.intersects (x, y, w, h);
 	}
 	
-	
-	public void setBodyBounds (float x, float y, float w, float h){
-		body.setPosition (x, y);
-		body.setSize (w, h);
-	}
 	
 	public float getBodyX (){
 		return body.getX ();

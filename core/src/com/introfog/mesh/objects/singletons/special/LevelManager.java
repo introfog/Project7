@@ -16,8 +16,6 @@ import com.introfog.screens.SelectedModeScreen;
 
 public class LevelManager extends GameObject{
 	private void completeLevel (){
-		GameObject.triggered[0] = null;
-		GameObject.triggered[1] = null;
 		ObjectManager.getInstance ().clear ();
 		
 		if (GameSystem.CURRENT_LEVEL != GameSystem.NUM_LEVELS){
@@ -36,8 +34,6 @@ public class LevelManager extends GameObject{
 	}
 	
 	private void closeLevel (){
-		GameObject.triggered[0] = null;
-		GameObject.triggered[1] = null;
 		ObjectManager.getInstance ().clear ();
 		MyGame.getInstance ().setScreen (SelectedModeScreen.getInstance ());
 	}
