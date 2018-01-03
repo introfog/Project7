@@ -28,7 +28,7 @@ public class ObjectAnimation{
 				frames[index++] = tmp[i][j];
 			}
 		}
-		animation = new Animation <TextureRegion> (frameDuration, frames);
+		animation = new Animation <> (frameDuration, frames);
 	}
 	
 	public ObjectAnimation (String fileName, boolean looping, float regionW, float regionH, float frameW, float frameH, float frameDuration){
@@ -44,21 +44,9 @@ public class ObjectAnimation{
 		return currSprite;
 	}
 	
-	public boolean isAnimationFinished (){
-		return !looping && animation.isAnimationFinished (time);
-	}
-	
 	public Sprite getFirstFrame (){
 		time = -Gdx.graphics.getDeltaTime ();
 		return getCurrSprite ();
-	}
-	
-	public Sprite getReversedCurrSprite (){
-		animation.setPlayMode (Animation.PlayMode.REVERSED);
-		time += Gdx.graphics.getDeltaTime ();
-		Sprite currSprite = new Sprite (animation.getKeyFrame (time, looping));
-		currSprite.setBounds (0, 0, frameW, frameH);
-		return currSprite;
 	}
 	
 	public void resetTime (){

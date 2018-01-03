@@ -14,11 +14,6 @@ public class Rectangle{
 		this.h = h;
 	}
 	
-	public void setSize (float w, float h){
-		this.w = w;
-		this.h = h;
-	}
-	
 	public void setBounds (float x, float y, float w, float h){
 		this.x = x;
 		this.y = y;

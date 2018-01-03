@@ -30,15 +30,6 @@ public class AnimatedObject extends Body{ //спец. класс для аним
 		return sprite.getY ();
 	}
 	
-	@Override
-	public float getSpriteW (){
-		return sprite.getW ();
-	}
-	
-	@Override
-	public float getSpriteH (){
-		return sprite.getH ();
-	}
 	
 	@Override
 	public void move (float deltaX, float deltaY){

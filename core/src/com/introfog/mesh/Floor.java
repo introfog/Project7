@@ -42,7 +42,7 @@ public class Floor{
 		for (int i = 0; i < numFloorW; i++){
 			for (int j = 0; j < 100; j++){
 				sprite = MathUtils.random (0, numRegions - 1);
-				coordinates.add (new Pair <Pair <Integer, Integer>, Integer> (new Pair <Integer, Integer>(i, j), sprite));
+				coordinates.add (new Pair <> (new Pair <>(i, j), sprite));
 			}
 		}
 	}

@@ -3,7 +3,6 @@ package com.introfog.mesh.body;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import com.introfog.addition.math.Rectangle;
-import com.introfog.render.DataRender;
 
 public abstract class Body{
 	protected Rectangle body;
@@ -43,14 +42,6 @@ public abstract class Body{
 	
 	public float getSpriteY (){
 		return sprite.getY ();
-	}
-	
-	public float getSpriteW (){
-		return sprite.getWidth ();
-	}
-	
-	public float getSpriteH (){
-		return sprite.getHeight ();
 	}
 	
 	public final Sprite getSprite (){

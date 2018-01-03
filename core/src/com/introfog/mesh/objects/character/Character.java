@@ -39,8 +39,8 @@ public class Character extends GameObject{
 	
 	private static class CharacterHolder{
 		private final static Character first = new Character (CharacterName.first);
-		private final static Character second = new Character (CharacterName.second);
 	}
+	
 	
 	protected Character (){ }
 	
@@ -48,7 +48,6 @@ public class Character extends GameObject{
 	public static Character getInstance (){
 		return CharacterHolder.first;
 	}
-	
 	
 	public void setSpritePosition (float x, float y){
 		body.setSpritePosition (x, y);
