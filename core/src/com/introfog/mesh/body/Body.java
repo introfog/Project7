@@ -18,14 +18,6 @@ public abstract class Body{
 		return body.intersects (x, y, w, h);
 	}
 	
-	public final boolean contains (float x, float y, float w, float h){
-		return body.contains (x, y, w, h);
-	}
-	
-	public void setScale (float scale){ }
-	
-	public void setOrigin (float originX, float originY){ }
-	
 	
 	public void setBodyBounds (float x, float y, float w, float h){
 		body.setPosition (x, y);

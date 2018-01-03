@@ -120,11 +120,7 @@
   <object id="143" x="64" y="816" width="64" height="48"/>
  </objectgroup>
  <objectgroup name="characters">
-  <object id="106" x="896" y="1056" width="64" height="48"/>
   <object id="107" x="256" y="1008" width="64" height="48"/>
- </objectgroup>
- <objectgroup name="hole">
-  <object id="141" x="704" y="960" width="128" height="96"/>
  </objectgroup>
  <objectgroup name="box">
   <object id="135" x="1024" y="960" width="64" height="48"/>
@@ -148,9 +144,5 @@
   <object id="104" x="64" y="1200" width="512" height="48"/>
   <object id="111" x="640" y="432" width="512" height="48"/>
   <object id="112" x="64" y="432" width="512" height="48"/>
- </objectgroup>
- <objectgroup name="mushrooms">
-  <object id="147" x="128" y="912" width="128" height="96"/>
-  <object id="149" x="640" y="624" width="128" height="96"/>
  </objectgroup>
 </map>

@@ -15,12 +15,10 @@ public class Character extends GameObject{
 	private static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
 	private static final float BODY_CHARACTER_H = CHARACTER_H / 4;
 	
-	protected boolean goToObject = false;
-	protected boolean isSelected = false;
 	protected Direction currentDirection = Direction.forward;
 	protected State state = State.stand;
 	
-	private CharacterName name = CharacterName.unknown;
+	private CharacterName name = CharacterName.first;
 	private CharacterMessageParser parser;
 	private CharacterControl control;
 	private CharacterAnimations animations;
@@ -56,8 +54,6 @@ public class Character extends GameObject{
 	
 	
 	public void setSpritePosition (float x, float y){
-		isSelected = (name == CharacterName.first);
-		
 		body.setSpritePosition (x, y);
 		body.move (0, 0.25f);
 	}
@@ -88,7 +84,6 @@ public class Character extends GameObject{
 		state = State.stand;
 		currentDirection = Direction.forward;
 		
-		control.clear ();
 		animations.clear ();
 		Pools.free (this);
 	}

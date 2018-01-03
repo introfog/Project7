@@ -10,7 +10,6 @@ import com.introfog.messages.MoveMessage;
 public class CharacterControl extends Character{
 	protected static final float CHARACTER_SPEED = 80 * ASPECT_RATIO;
 	
-	protected boolean movedByComputer = false;
 	protected float deltaX = 0;
 	protected float deltaY = 0;
 	protected Character character;
@@ -54,50 +53,24 @@ public class CharacterControl extends Character{
 		deltaY = 0;
 		if (Gdx.input.isKeyPressed (Input.Keys.W)){
 			keyWPressed ();
-			movedByComputer = false;
 		}
 		if (Gdx.input.isKeyPressed (Input.Keys.S)){
 			keySPressed ();
-			movedByComputer = false;
 		}
 		if (Gdx.input.isKeyPressed (Input.Keys.D)){
 			keyDPressed ();
-			movedByComputer = false;
 		}
 		if (Gdx.input.isKeyPressed (Input.Keys.A)){
 			keyAPressed ();
-			movedByComputer = false;
 		}
 		
-		if (!movedByComputer && character.goToObject){
-			character.goToObject = false;
-		}
-		
-		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
-			movedByComputer = false;
-			character.isSelected = false;
-		}
-		else if (deltaX != 0 || deltaY != 0){
+		if (deltaX != 0 || deltaY != 0){
 			character.state = State.move;
 			ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, character.getBodyX (), character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
 			character.move (deltaX, deltaY);
 		}
 	}
 	
-	private void updatePushControl (){
-		character.state = State.abut;
-		deltaX = 0;
-		deltaY = 0;
-		
-		if (deltaX != 0 || deltaY != 0){
-			character.state = State.push;
-			ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, character.getBodyX (), character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
-			character.move (deltaX, deltaY);
-		}
-	}
-	
-	
-	public CharacterControl (){}
 	
 	public CharacterControl (Character character){
 		this.character = character;
@@ -105,16 +78,8 @@ public class CharacterControl extends Character{
 	
 	@Override
 	public void update (){
-		if (character.isSelected && (character.state == State.stand || character.state == State.move)){
+		if (character.state == State.stand || character.state == State.move){
 			updateMoveControl ();
 		}
-		else if (character.isSelected && (character.state == State.abut || character.state == State.push)){
-			updatePushControl ();
-		}
-	}
-	
-	@Override
-	public void clear (){
-		movedByComputer = false;
 	}
 }

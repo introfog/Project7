@@ -21,7 +21,7 @@ public class Wall extends GameObject{
 	
 	public Wall (){
 		objectType = ObjectType.wall;
-		body = new BodyObject ("core/assets/images/other/wall_2.png", 0, 0, WALL_W, WALL_H, BODY_WALL_W, BODY_WALL_H);
+		body = new BodyObject ("core/assets/images/other/wall.png", 0, 0, WALL_W, WALL_H, BODY_WALL_W, BODY_WALL_H);
 		dataRender = new DataRender (body.getSprite (), LayerType.normal);
 	}
 	
@@ -31,16 +31,14 @@ public class Wall extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.move && (message.objectType == ObjectType.character ||
-				message.objectType == ObjectType.box)){
+		if (message.type == MessageType.move){
 			MoveMessage msg = (MoveMessage) message;
-			if (msg.deltaX != 0 &&  body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
+			if (msg.deltaX != 0 && body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, -msg.deltaX, 0));
 			}
-			if (msg.deltaY != 0 &&  body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+			if (msg.deltaY != 0 && body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, 0, -msg.deltaY));
 			}
-			
 		}
 	}
 	
