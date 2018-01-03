@@ -1,20 +1,21 @@
 package com.introfog.mesh.objects;
 
-import com.introfog.mesh.body.NoSpriteObject;
+import com.badlogic.gdx.utils.Pools;
+import com.introfog.addition.math.Rectangle;
 import com.introfog.mesh.objects.singletons.special.ObjectManager;
-import com.introfog.messages.GameMessage;
-import com.introfog.messages.MessageType;
-import com.introfog.messages.MoveMessage;
-import com.introfog.messages.PushOutMessage;
+import com.introfog.messages.*;
 
 public class InvisibleWall extends GameObject{
+	private Rectangle body;
+	
+	
 	public InvisibleWall (){
 		objectType = ObjectType.invisibleWall;
-		body = new NoSpriteObject (0, 0, 1, 1);
+		body = new Rectangle (0, 0, 1, 1);
 	}
 	
 	public void setBodyBounds (float x, float y, float w, float h){
-		body.setBodyBounds (x, y, w, h);
+		body.setBounds (x, y, w, h);
 	}
 	
 	@Override
@@ -28,5 +29,10 @@ public class InvisibleWall extends GameObject{
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, 0, -msg.deltaY));
 			}
 		}
+	}
+	
+	@Override
+	public void clear (){
+		Pools.free (this);
 	}
 }
