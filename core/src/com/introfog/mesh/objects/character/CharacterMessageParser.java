@@ -10,10 +10,12 @@ public class CharacterMessageParser extends Character{
 		this.character = character;
 	}
 	
-	public void parseMessage (GameMessage message){
+	public boolean parseMessage (GameMessage message){
 		if (message.type == MessageType.pushOut && message.object == character){
 			PushOutMessage msg = (PushOutMessage) message;
-			character.setBodyPosition (msg.undo.oldBodyX, msg.undo.oldBodyY);
+			character.move (-msg.undo.deltaX, -msg.undo.deltaY);
+			return true;
 		}
+		return false;
 	}
 }

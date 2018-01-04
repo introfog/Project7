@@ -66,19 +66,24 @@ public class ObjectManager extends GameObject{
 			GameMessage msg = messages.remove ();
 			
 			for (int i = objects.size () - 1; i > -1 && !objects.isEmpty (); i--){
-				objects.get (i).sendMessage (msg);
+				if (objects.get (i).sendMessage (msg)){
+					break;
+				}
 			}
 		}
 	}
 	
 	@Override
-	public void sendMessage (GameMessage message){
+	public boolean sendMessage (GameMessage message){
 		if (message.type == MessageType.deleteObject){
 			objects.remove (message.object);
+			return true;
 		}
 		else if (message.type == MessageType.addObject){
 			objects.add (message.object);
+			return true;
 		}
+		return false;
 	}
 	
 	@Override

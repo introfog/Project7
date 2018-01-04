@@ -6,7 +6,7 @@ import com.introfog.mesh.body.AnimatedObject;
 import com.introfog.mesh.objects.GameObject;
 import com.introfog.mesh.objects.ObjectType;
 import com.introfog.mesh.objects.State;
-import com.introfog.mesh.objects.singletons.special.ObjectManager;
+import com.introfog.mesh.objects.singletons.Camera;
 import com.introfog.messages.*;
 
 public class Character extends GameObject{
@@ -52,9 +52,7 @@ public class Character extends GameObject{
 	public void setSpritePosition (float x, float y){
 		body.setSpritePosition (x, y);
 		body.move (0, 0.25f);
-		ObjectManager.getInstance ().addMessage (new MoveMessage (this, 0, 0, getBodyX (),
-																  getBodyY (), getSpriteX (), getSpriteY (), getBodyW (),
-																  getBodyH ()));
+		Camera.getInstance ().setPosition (x + CHARACTER_W / 2, y + CHARACTER_H / 2);
 	}
 	
 	public CharacterName getName (){
@@ -68,8 +66,8 @@ public class Character extends GameObject{
 	}
 	
 	@Override
-	public void sendMessage (GameMessage message){
-		parser.parseMessage (message);
+	public boolean sendMessage (GameMessage message){
+		return parser.parseMessage (message);
 	}
 	
 	@Override
@@ -86,10 +84,6 @@ public class Character extends GameObject{
 		Pools.free (this);
 	}
 	
-	
-	protected void setBodyPosition (float x, float y){
-		body.setBodyPosition (x, y);
-	}
 	
 	protected float getBodyX (){
 		return body.getBodyX ();

@@ -83,12 +83,15 @@ public class LevelManager extends GameObject{
 	}
 	
 	@Override
-	public void sendMessage (GameMessage message){
+	public boolean sendMessage (GameMessage message){
 		if (message.type == MessageType.levelComplete){
 			completeLevel ();
+			return true;
 		}
 		else if (message.type == MessageType.playerLost){
 			closeLevel ();
+			return true;
 		}
+		return false;
 	}
 }

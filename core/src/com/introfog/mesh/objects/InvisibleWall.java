@@ -19,16 +19,19 @@ public class InvisibleWall extends GameObject{
 	}
 	
 	@Override
-	public void sendMessage (GameMessage message){
+	public boolean sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
 			if (msg.deltaX != 0 && body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg));
+				return true;
 			}
 			if (msg.deltaY != 0 && body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg));
+				return true;
 			}
 		}
+		return false;
 	}
 	
 	@Override

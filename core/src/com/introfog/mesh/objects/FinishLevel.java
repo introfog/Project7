@@ -19,7 +19,7 @@ public class FinishLevel extends GameObject{
 	}
 	
 	@Override
-	public void sendMessage (GameMessage message){
+	public boolean sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
 			
@@ -27,6 +27,7 @@ public class FinishLevel extends GameObject{
 				ObjectManager.getInstance ().addMessage (new CompleteLevelMessage ());
 			}
 		}
+		return false;
 	}
 	
 	@Override

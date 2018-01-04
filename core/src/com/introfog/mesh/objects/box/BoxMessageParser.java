@@ -48,7 +48,7 @@ public class BoxMessageParser extends Box{
 		this.box = box;
 	}
 	
-	public void parseMessage (GameMessage message){
+	public boolean parseMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			movedByCharacterMessage (message);
 		}
@@ -63,5 +63,6 @@ public class BoxMessageParser extends Box{
 		else if (message.type == MessageType.pushOut && message.object == box){
 			pushOutMessage (message);
 		}
+		return false;
 	}
 }

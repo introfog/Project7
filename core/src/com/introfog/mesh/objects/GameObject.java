@@ -19,7 +19,7 @@ public abstract class GameObject{
 	
 	
 	public void update (){ }
-	abstract public void sendMessage (GameMessage message); //обязательный метод у объекта
+	abstract public boolean sendMessage (GameMessage message); //обязательный метод у объекта
 	public void draw (){ }
 	public void clear (){ }
 }

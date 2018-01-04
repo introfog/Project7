@@ -42,8 +42,8 @@ public class Box extends GameObject{
 	}
 	
 	@Override
-	public void sendMessage (GameMessage message){
-		parser.parseMessage (message);
+	public boolean sendMessage (GameMessage message){
+		return parser.parseMessage (message);
 	}
 	
 	@Override

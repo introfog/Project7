@@ -32,20 +32,25 @@ public class Camera extends GameObject{
 		return camera.combined;
 	}
 	
+	public void setPosition (float x, float y){
+		camera.position.set (x, y, 0);
+	}
+	
 	@Override
 	public void update (){
 		camera.update ();
 	}
 	
 	@Override
-	public void sendMessage (GameMessage message){
+	public boolean sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
-			camera.position.set (msg.oldBodyX + msg.deltaX + msg.bodyW / 2, msg.oldBodyY + msg.deltaY, 0);
+			camera.translate (msg.deltaX, msg.deltaY);
 		}
 		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
 			PushOutMessage msg = (PushOutMessage) message;
-			camera.position.set (msg.undo.oldBodyX + msg.undo.bodyW / 2, msg.undo.oldBodyY, 0);
+			camera.translate (-msg.undo.deltaX, -msg.undo.deltaY);
 		}
+		return false;
 	}
 }
