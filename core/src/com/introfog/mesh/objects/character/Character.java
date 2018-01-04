@@ -112,4 +112,8 @@ public class Character extends GameObject{
 	protected void move (float deltaX, float deltaY){
 		body.move (deltaX, deltaY);
 	}
+	
+	protected boolean intersects (float x, float y, float w, float h){
+		return body.intersects (x, y, w, h);
+	}
 }

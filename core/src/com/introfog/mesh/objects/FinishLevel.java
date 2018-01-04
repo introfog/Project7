@@ -25,6 +25,7 @@ public class FinishLevel extends GameObject{
 			
 			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 				ObjectManager.getInstance ().addMessage (new CompleteLevelMessage ());
+				return true;
 			}
 		}
 		return false;

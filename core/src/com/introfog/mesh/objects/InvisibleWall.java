@@ -26,7 +26,7 @@ public class InvisibleWall extends GameObject{
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg));
 				return true;
 			}
-			if (msg.deltaY != 0 && body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+			else if (msg.deltaY != 0 && body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg));
 				return true;
 			}

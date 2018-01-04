@@ -6,43 +6,7 @@ import com.introfog.mesh.objects.singletons.special.ObjectManager;
 import com.introfog.messages.*;
 
 public class BoxMessageParser extends Box{
-	private boolean pushOutHorizontal = false;
-	private boolean pushOutVertical = false;
 	private Box box;
-	
-	
-	private void movedByCharacterMessage (GameMessage message){
-		MoveMessage msg = (MoveMessage) message;
-		if (msg.deltaX != 0 && box.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
-			ObjectManager.getInstance ().addMessage (
-					new MoveMessage (box, msg.deltaX, 0, box.getBodyX (), box.getBodyY (), box.getSpriteX (),
-									 box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
-			box.move (msg.deltaX, 0);
-		}
-		if (msg.deltaY != 0 && box.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-			ObjectManager.getInstance ().addMessage (
-					new MoveMessage (box, 0, msg.deltaY, box.getBodyX (), box.getBodyY (), box.getSpriteX (),
-									 box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
-			box.move (0, msg.deltaY);
-		}
-	}
-	
-	private void pushOutMessage (GameMessage message){
-		//два флага нужны, что бы не было ситуации когда ящик упирается в два объекта, и они его 2 раза выталкивают,
-		//вместо одного.
-		PushOutMessage msg = (PushOutMessage) message;
-		ObjectManager.getInstance ().addMessage (
-				new MoveMessage (box, msg.undo.deltaX, msg.undo.deltaY, box.getBodyX (), box.getBodyY (), box.getSpriteX (),
-								 box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
-		box.setBodyPosition (msg.undo.oldBodyX, msg.undo.oldBodyY);
-	}
-	
-	
-	@Override
-	public void update (){
-		pushOutHorizontal = false;
-		pushOutVertical = false;
-	}
 	
 	public BoxMessageParser (Box box){
 		this.box = box;
@@ -50,7 +14,15 @@ public class BoxMessageParser extends Box{
 	
 	public boolean parseMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
-			movedByCharacterMessage (message);
+			MoveMessage msg = (MoveMessage) message;
+			if (box.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+				ObjectManager.getInstance ().addMessage (
+						new MoveMessage (box, msg.deltaX, msg.deltaY, box.getBodyX (), box.getBodyY (), box.getSpriteX (),
+										 box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
+				box.move (msg.deltaX, msg.deltaY);
+				System.out.println ("Box moved.");
+				return true;
+			}
 		}
 		else if (message.type == MessageType.move && message.objectType == ObjectType.box && message.object != box){
 			MoveMessage msg = (MoveMessage) message;
@@ -58,10 +30,13 @@ public class BoxMessageParser extends Box{
 			if (box.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 				ObjectManager.getInstance ().addMessage (
 						new PushOutMessage (msg));
+				return true;
 			}
 		}
 		else if (message.type == MessageType.pushOut && message.object == box){
-			pushOutMessage (message);
+			PushOutMessage msg = (PushOutMessage) message;
+			box.move (-msg.undo.deltaX, -msg.undo.deltaY);
+			System.out.println ("Box push out.");
 		}
 		return false;
 	}

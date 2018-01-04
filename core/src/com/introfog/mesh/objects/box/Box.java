@@ -37,7 +37,6 @@ public class Box extends GameObject{
 	
 	@Override
 	public void update (){
-		parser.update ();
 		animations.update ();
 	}
 	
