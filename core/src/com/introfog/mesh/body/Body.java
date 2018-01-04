@@ -52,4 +52,9 @@ public abstract class Body{
 		sprite.setPosition (x, y);
 		body.setPosition (x, y);
 	}
+	
+	public void setBodyPosition (float x, float y){
+		sprite.setPosition (x, y);
+		body.setPosition (x, y);
+	}
 }

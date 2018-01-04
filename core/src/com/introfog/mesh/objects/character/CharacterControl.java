@@ -64,13 +64,22 @@ public class CharacterControl extends Character{
 			keyAPressed ();
 		}
 		
-		if (deltaX != 0 || deltaY != 0){
+		
+		if (deltaX != 0){
 			character.state = State.move;
 			ObjectManager.getInstance ().addMessage (
-					new MoveMessage (character, deltaX, deltaY, character.getBodyX (), character.getBodyY (),
+					new MoveMessage (character, deltaX, 0, character.getBodyX (), character.getBodyY (),
 									 character.getSpriteX (), character.getSpriteY (), character.getBodyW (),
 									 character.getBodyH ()));
-			character.move (deltaX, deltaY);
+			character.move (deltaX, 0);
+		}
+		if (deltaY != 0){
+			character.state = State.move;
+			ObjectManager.getInstance ().addMessage (
+					new MoveMessage (character, 0, deltaY, character.getBodyX (), character.getBodyY (),
+									 character.getSpriteX (), character.getSpriteY (), character.getBodyW (),
+									 character.getBodyH ()));
+			character.move (0, deltaY);
 		}
 	}
 	

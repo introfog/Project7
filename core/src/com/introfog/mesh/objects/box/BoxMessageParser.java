@@ -31,20 +31,10 @@ public class BoxMessageParser extends Box{
 		//два флага нужны, что бы не было ситуации когда ящик упирается в два объекта, и они его 2 раза выталкивают,
 		//вместо одного.
 		PushOutMessage msg = (PushOutMessage) message;
-		if (msg.deltaX != 0 && !pushOutHorizontal){
-			ObjectManager.getInstance ().addMessage (
-					new MoveMessage (box, msg.deltaX, 0, box.getBodyX (), box.getBodyY (), box.getSpriteX (),
-									 box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
-			box.move (msg.deltaX, 0);
-			pushOutHorizontal = true;
-		}
-		if (msg.deltaY != 0 && !pushOutVertical){
-			ObjectManager.getInstance ().addMessage (
-					new MoveMessage (box, 0, msg.deltaY, box.getBodyX (), box.getBodyY (), box.getSpriteX (),
-									 box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
-			box.move (0, msg.deltaY);
-			pushOutVertical = true;
-		}
+		ObjectManager.getInstance ().addMessage (
+				new MoveMessage (box, msg.undo.deltaX, msg.undo.deltaY, box.getBodyX (), box.getBodyY (), box.getSpriteX (),
+								 box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
+		box.setBodyPosition (msg.undo.oldBodyX, msg.undo.oldBodyY);
 	}
 	
 	
@@ -66,7 +56,8 @@ public class BoxMessageParser extends Box{
 			MoveMessage msg = (MoveMessage) message;
 			//не делим на 2 случая по оси Х и У, т.к. ящики двигаются только в 4 направлениях.
 			if (box.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, -msg.deltaX, -msg.deltaY));
+				ObjectManager.getInstance ().addMessage (
+						new PushOutMessage (msg));
 			}
 		}
 		else if (message.type == MessageType.pushOut && message.object == box){

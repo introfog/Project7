@@ -63,7 +63,6 @@ public class Character extends GameObject{
 	
 	@Override
 	public void update (){
-		parser.update ();
 		animations.update ();
 		control.update ();
 	}
@@ -85,6 +84,11 @@ public class Character extends GameObject{
 		
 		animations.clear ();
 		Pools.free (this);
+	}
+	
+	
+	protected void setBodyPosition (float x, float y){
+		body.setBodyPosition (x, y);
 	}
 	
 	protected float getBodyX (){
@@ -113,9 +117,5 @@ public class Character extends GameObject{
 	
 	protected void move (float deltaX, float deltaY){
 		body.move (deltaX, deltaY);
-	}
-	
-	protected boolean intersects (float x, float y, float w, float h){
-		return body.intersects (x, y, w, h);
 	}
 }

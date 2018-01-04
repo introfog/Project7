@@ -32,6 +32,12 @@ public class AnimatedObject extends Body{ //спец. класс для аним
 	
 	
 	@Override
+	public void setBodyPosition (float x, float y){
+		sprite.setPosition (x - bodyShiftX, y);
+		body.setPosition (x, y);
+	}
+	
+	@Override
 	public void move (float deltaX, float deltaY){
 		body.move (deltaX, deltaY);
 		sprite.move (deltaX, deltaY);

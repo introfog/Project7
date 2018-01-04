@@ -22,11 +22,11 @@ public class InvisibleWall extends GameObject{
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
-			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, -msg.deltaX, 0));
+			if (msg.deltaX != 0 && body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg));
 			}
-			if (body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, 0, -msg.deltaY));
+			if (msg.deltaY != 0 && body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg));
 			}
 		}
 	}

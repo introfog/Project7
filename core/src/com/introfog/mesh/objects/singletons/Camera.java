@@ -41,7 +41,11 @@ public class Camera extends GameObject{
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
-			camera.position.set (msg.oldBodyX  + msg.deltaX + msg.bodyW / 2, msg.oldBodyY + msg.deltaY, 0);
+			camera.position.set (msg.oldBodyX + msg.deltaX + msg.bodyW / 2, msg.oldBodyY + msg.deltaY, 0);
+		}
+		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
+			PushOutMessage msg = (PushOutMessage) message;
+			camera.position.set (msg.undo.oldBodyX + msg.undo.bodyW / 2, msg.undo.oldBodyY, 0);
 		}
 	}
 }
