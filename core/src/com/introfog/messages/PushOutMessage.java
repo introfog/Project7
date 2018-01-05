@@ -7,7 +7,7 @@ public class PushOutMessage extends GameMessage{
 	public PushOutMessage (MoveMessage undo){
 		this.type = MessageType.pushOut;
 		this.object = undo.object;
-		this.objectType = object.objectType;
+		this.objectType = object.getObjectType ();
 		
 		this.undo = undo;
 	}

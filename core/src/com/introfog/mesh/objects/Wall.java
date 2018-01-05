@@ -9,28 +9,25 @@ import com.introfog.mesh.objects.singletons.special.ObjectManager;
 import com.introfog.messages.*;
 import com.introfog.render.*;
 
-public class Wall extends GameObject{
+public class Wall implements GameObject{
 	private static final float BODY_WALL_W = UNIT;
 	private static final float BODY_WALL_H = UNIT * ANGLE;
 	
 	private Rectangle body;
-	private Sprite sprite;
+	private DataRender dataRender;
 	
 	
 	public Wall (){
-		objectType = ObjectType.wall;
-		
 		Texture texture = new Texture ("core/assets/images/other/wall.png");
-		sprite = new Sprite (texture);
-		sprite.setBounds (0, 0, texture.getWidth () * ASPECT_RATIO, texture.getHeight () * ASPECT_RATIO);
+		dataRender = new DataRender ();
+		dataRender.sprite = new Sprite (texture);
+		dataRender.sprite.setBounds (0, 0, texture.getWidth () * ASPECT_RATIO, texture.getHeight () * ASPECT_RATIO);
 		body = new Rectangle (0, 0, BODY_WALL_W, BODY_WALL_H);
-		
-		dataRender = new DataRender (sprite, LayerType.normal);
 	}
 	
 	public void setSpritePosition (float x, float y){
-		sprite.setPosition (x, y);
-		body.setPosition (x + (sprite.getWidth () - body.getW ()) / 2, y);
+		dataRender.sprite.setPosition (x, y);
+		body.setPosition (x + (dataRender.sprite.getWidth () - body.getW ()) / 2, y);
 	}
 	
 	@Override

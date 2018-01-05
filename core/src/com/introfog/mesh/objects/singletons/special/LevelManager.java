@@ -11,7 +11,7 @@ import com.introfog.mesh.objects.GameObject;
 import com.introfog.messages.*;
 import com.introfog.screens.SelectedModeScreen;
 
-public class LevelManager extends GameObject{
+public class LevelManager implements GameObject{
 	private void completeLevel (){
 		ObjectManager.getInstance ().clear ();
 		

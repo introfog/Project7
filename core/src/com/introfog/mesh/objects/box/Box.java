@@ -8,7 +8,7 @@ import com.introfog.mesh.objects.ObjectType;
 import com.introfog.mesh.objects.State;
 import com.introfog.messages.*;
 
-public class Box extends GameObject{
+public class Box implements GameObject{
 	protected static final float BODY_BOX_W = UNIT - 1;
 	protected static final float BODY_BOX_H = UNIT * ANGLE - 1;
 	protected static final float BOX_W = UNIT;
@@ -16,6 +16,8 @@ public class Box extends GameObject{
 	
 	protected State state = State.stand;
 	
+	private ObjectType objectType;
+	protected AnimatedObject body;
 	private BoxMessageParser parser;
 	private BoxAnimations animations;
 	
@@ -56,27 +58,8 @@ public class Box extends GameObject{
 		Pools.free (this);
 	}
 	
-	protected float getBodyX (){
-		return body.getBodyX ();
-	}
-	
-	protected float getBodyY (){
-		return body.getBodyY ();
-	}
-	
-	protected float getSpriteX (){
-		return body.getSpriteX ();
-	}
-	
-	protected float getSpriteY (){
-		return body.getSpriteY ();
-	}
-	
-	protected void move (float deltaX, float deltaY){
-		body.move (deltaX, deltaY);
-	}
-	
-	protected boolean intersects (float x, float y, float w, float h){
-		return body.intersects (x, y, w, h);
+	@Override
+	public ObjectType getObjectType (){
+		return objectType;
 	}
 }

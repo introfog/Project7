@@ -10,4 +10,14 @@ public class DataRender{
 		this.sprite = sprite;
 		this.layerType = layerType;
 	}
+	
+	public DataRender (){
+		sprite = new Sprite ();
+		layerType = LayerType.normal;
+	}
+	
+	public DataRender (LayerType layerType){
+		sprite = new Sprite ();
+		this.layerType = layerType;
+	}
 }

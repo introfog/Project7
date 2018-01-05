@@ -1,14 +1,12 @@
 package com.introfog.mesh.objects.character;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import com.introfog.mesh.animation.ObjectAnimation;
 import com.introfog.mesh.objects.GameObject;
 import com.introfog.render.*;
 
 public class CharacterAnimations extends Character{
 	private Character character;
-	private Sprite currSprite;
+	private DataRender dataRender;
 	
 	private ObjectAnimation[] stand;
 	private ObjectAnimation[] walk;
@@ -17,7 +15,7 @@ public class CharacterAnimations extends Character{
 	public CharacterAnimations (Character character){
 		this.character = character;
 		String path;
-		if (character.getName () == CharacterName.first){
+		if (character.name == CharacterName.first){
 			path = "core/assets/images/character/first/";
 		}
 		else{
@@ -35,25 +33,24 @@ public class CharacterAnimations extends Character{
 					region, CHARACTER_W, CHARACTER_H, 0.15f);
 		}
 		
-		dataRender = new DataRender (currSprite, LayerType.normal);
+		dataRender = new DataRender ();
 	}
 	
 	@Override
 	public void update (){
 		switch (character.state){
 		case stand:
-			currSprite = stand[character.currentDirection.ordinal ()].getCurrSprite ();
+			dataRender.sprite = stand[character.currentDirection.ordinal ()].getCurrSprite ();
 			break;
 		case move:
-			currSprite = walk[character.currentDirection.ordinal ()].getCurrSprite ();
+			dataRender.sprite = walk[character.currentDirection.ordinal ()].getCurrSprite ();
 			break;
 		}
-		currSprite.setPosition (character.getSpriteX (), character.getSpriteY ());
+		dataRender.sprite.setPosition (character.body.getSpriteX (), character.body.getSpriteY ());
 	}
 	
 	@Override
 	public void draw (){
-		dataRender.sprite = currSprite;
 		Render.getInstance ().addDataForRender (dataRender);
 	}
 	

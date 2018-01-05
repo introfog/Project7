@@ -5,12 +5,11 @@ import com.introfog.addition.math.Rectangle;
 import com.introfog.mesh.objects.singletons.special.ObjectManager;
 import com.introfog.messages.*;
 
-public class InvisibleWall extends GameObject{
+public class InvisibleWall implements GameObject{
 	private Rectangle body;
 	
 	
 	public InvisibleWall (){
-		objectType = ObjectType.invisibleWall;
 		body = new Rectangle (0, 0, 1, 1);
 	}
 	

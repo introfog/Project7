@@ -17,7 +17,7 @@ public class MoveMessage extends GameMessage{
 						float spriteOldY, float bodyW, float bodyH){
 		this.type = MessageType.move;
 		this.object = object;
-		this.objectType = object.objectType;
+		this.objectType = object.getObjectType ();
 		
 		this.deltaX = deltaX;
 		this.deltaY = deltaY;

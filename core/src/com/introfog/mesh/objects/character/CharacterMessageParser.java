@@ -13,9 +13,9 @@ public class CharacterMessageParser extends Character{
 	public boolean parseMessage (GameMessage message){
 		if (message.type == MessageType.pushOut){
 			PushOutMessage msg = (PushOutMessage) message;
-			if (character.intersects (msg.undo.oldBodyX - msg.undo.deltaX, msg.undo.oldBodyY - msg.undo.deltaY,
+			if (character.body.intersects (msg.undo.oldBodyX - msg.undo.deltaX, msg.undo.oldBodyY - msg.undo.deltaY,
 									  msg.undo.bodyW, msg.undo.bodyH)){
-				character.move (-msg.undo.deltaX, -msg.undo.deltaY);
+				character.body.move (-msg.undo.deltaX, -msg.undo.deltaY);
 			}
 		}
 		return false;

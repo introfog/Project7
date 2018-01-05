@@ -11,7 +11,7 @@ import com.introfog.render.Render;
 
 import java.util.LinkedList;
 
-public class ObjectManager extends GameObject{
+public class ObjectManager implements GameObject{
 	private LinkedList <GameMessage> messages;
 	private LinkedList <GameObject> objects;
 	

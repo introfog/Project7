@@ -68,18 +68,18 @@ public class CharacterControl extends Character{
 		if (deltaX != 0){
 			character.state = State.move;
 			ObjectManager.getInstance ().addMessage (
-					new MoveMessage (character, deltaX, 0, character.getBodyX (), character.getBodyY (),
-									 character.getSpriteX (), character.getSpriteY (), character.getBodyW (),
-									 character.getBodyH ()));
-			character.move (deltaX, 0);
+					new MoveMessage (character, deltaX, 0, character.body.getBodyX (), character.body.getBodyY (),
+									 character.body.getSpriteX (), character.body.getSpriteY (), character.body.getBodyW (),
+									 character.body.getBodyH ()));
+			character.body.move (deltaX, 0);
 		}
 		if (deltaY != 0){
 			character.state = State.move;
 			ObjectManager.getInstance ().addMessage (
-					new MoveMessage (character, 0, deltaY, character.getBodyX () - deltaX,
-									 character.getBodyY (), character.getSpriteX (), character.getSpriteY (),
-									 character.getBodyW (), character.getBodyH ()));
-			character.move (0, deltaY);
+					new MoveMessage (character, 0, deltaY, character.body.getBodyX () - deltaX,
+									 character.body.getBodyY (), character.body.getSpriteX (), character.body.getSpriteY (),
+									 character.body.getBodyW (), character.body.getBodyH ()));
+			character.body.move (0, deltaY);
 		}
 	}
 	

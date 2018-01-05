@@ -6,6 +6,6 @@ public class AddObjectMessage extends GameMessage{
 	public AddObjectMessage (GameObject object){
 		this.type = MessageType.addObject;
 		this.object = object;
-		this.objectType = object.objectType;
+		this.objectType = object.getObjectType ();
 	}
 }

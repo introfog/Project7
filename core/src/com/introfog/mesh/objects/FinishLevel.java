@@ -5,12 +5,11 @@ import com.introfog.addition.math.Rectangle;
 import com.introfog.mesh.objects.singletons.special.ObjectManager;
 import com.introfog.messages.*;
 
-public class FinishLevel extends GameObject{
+public class FinishLevel implements GameObject{
 	private Rectangle body;
 	
 	
 	public FinishLevel (){
-		objectType = ObjectType.finishLevel;
 		body = new Rectangle (0, 0, 1, 1);
 	}
 	

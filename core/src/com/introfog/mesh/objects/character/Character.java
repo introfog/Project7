@@ -9,9 +9,7 @@ import com.introfog.mesh.objects.State;
 import com.introfog.mesh.objects.singletons.Camera;
 import com.introfog.messages.*;
 
-import java.util.LinkedList;
-
-public class Character extends GameObject{
+public class Character implements GameObject{
 	protected static final float CHARACTER_W = UNIT;
 	protected static final float CHARACTER_H = UNIT;
 	
@@ -21,7 +19,9 @@ public class Character extends GameObject{
 	protected Direction currentDirection = Direction.forward;
 	protected State state = State.stand;
 	
-	private CharacterName name = CharacterName.first;
+	private ObjectType objectType;
+	protected AnimatedObject body;
+	protected CharacterName name = CharacterName.first;
 	private CharacterMessageParser parser;
 	private CharacterControl control;
 	private CharacterAnimations animations;
@@ -57,10 +57,6 @@ public class Character extends GameObject{
 		Camera.getInstance ().setPosition (x + CHARACTER_W / 2, y + CHARACTER_H / 2);
 	}
 	
-	public CharacterName getName (){
-		return name;
-	}
-	
 	@Override
 	public void update (){
 		animations.update ();
@@ -75,7 +71,7 @@ public class Character extends GameObject{
 	@Override
 	public void draw (){
 		animations.draw ();
-		Camera.getInstance ().setPosition (getBodyX () + CHARACTER_W / 2, getBodyY () + CHARACTER_H / 2);
+		Camera.getInstance ().setPosition (body.getBodyX () + CHARACTER_W / 2, body.getBodyY () + CHARACTER_H / 2);
 	}
 	
 	@Override
@@ -87,36 +83,8 @@ public class Character extends GameObject{
 		Pools.free (this);
 	}
 	
-	
-	protected float getBodyX (){
-		return body.getBodyX ();
-	}
-	
-	protected float getBodyY (){
-		return body.getBodyY ();
-	}
-	
-	protected float getBodyW (){
-		return body.getBodyW ();
-	}
-	
-	protected float getBodyH (){
-		return body.getBodyH ();
-	}
-	
-	protected float getSpriteX (){
-		return body.getSpriteX ();
-	}
-	
-	protected float getSpriteY (){
-		return body.getSpriteY ();
-	}
-	
-	protected void move (float deltaX, float deltaY){
-		body.move (deltaX, deltaY);
-	}
-	
-	protected boolean intersects (float x, float y, float w, float h){
-		return body.intersects (x, y, w, h);
+	@Override
+	public ObjectType getObjectType (){
+		return objectType;
 	}
 }
