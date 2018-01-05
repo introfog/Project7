@@ -56,10 +56,6 @@ public class Box extends GameObject{
 		Pools.free (this);
 	}
 	
-	protected void setBodyPosition (float x, float y){
-		body.setBodyPosition (x, y);
-	}
-	
 	protected float getBodyX (){
 		return body.getBodyX ();
 	}

@@ -9,6 +9,8 @@ import com.introfog.mesh.objects.State;
 import com.introfog.mesh.objects.singletons.Camera;
 import com.introfog.messages.*;
 
+import java.util.LinkedList;
+
 public class Character extends GameObject{
 	protected static final float CHARACTER_W = UNIT;
 	protected static final float CHARACTER_H = UNIT;
@@ -73,6 +75,7 @@ public class Character extends GameObject{
 	@Override
 	public void draw (){
 		animations.draw ();
+		Camera.getInstance ().setPosition (getBodyX () + CHARACTER_W / 2, getBodyY () + CHARACTER_H / 2);
 	}
 	
 	@Override

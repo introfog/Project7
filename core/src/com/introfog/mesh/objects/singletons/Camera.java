@@ -43,14 +43,6 @@ public class Camera extends GameObject{
 	
 	@Override
 	public boolean sendMessage (GameMessage message){
-		if (message.type == MessageType.move && message.objectType == ObjectType.character){
-			MoveMessage msg = (MoveMessage) message;
-			camera.translate (msg.deltaX, msg.deltaY);
-		}
-		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
-			PushOutMessage msg = (PushOutMessage) message;
-			camera.translate (-msg.undo.deltaX, -msg.undo.deltaY);
-		}
 		return false;
 	}
 }
