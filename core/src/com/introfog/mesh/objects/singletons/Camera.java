@@ -4,11 +4,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 
 import com.introfog.GameSystem;
-import com.introfog.mesh.objects.GameObject;
-import com.introfog.mesh.objects.ObjectType;
-import com.introfog.messages.*;
 
-public class Camera extends GameObject{
+public class Camera{
 	private OrthographicCamera camera;
 	
 	
@@ -17,8 +14,6 @@ public class Camera extends GameObject{
 	}
 	
 	private Camera (){
-		objectType = ObjectType.camera;
-		
 		camera = new OrthographicCamera (GameSystem.SCREEN_W, GameSystem.SCREEN_H);
 		camera.setToOrtho (false);
 	}
@@ -36,13 +31,7 @@ public class Camera extends GameObject{
 		camera.position.set (x, y, 0);
 	}
 	
-	@Override
 	public void update (){
 		camera.update ();
-	}
-	
-	@Override
-	public boolean sendMessage (GameMessage message){
-		return false;
 	}
 }

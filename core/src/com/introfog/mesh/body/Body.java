@@ -44,10 +44,6 @@ public abstract class Body{
 		return sprite.getY ();
 	}
 	
-	public final Sprite getSprite (){
-		return sprite;
-	}
-	
 	public void setSpritePosition (float x, float y){
 		sprite.setPosition (x, y);
 		body.setPosition (x, y);

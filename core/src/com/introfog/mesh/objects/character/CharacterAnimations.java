@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import com.introfog.mesh.animation.ObjectAnimation;
 import com.introfog.mesh.objects.GameObject;
-import com.introfog.render.DataRender;
-import com.introfog.render.LayerType;
-import com.introfog.render.Render;
+import com.introfog.render.*;
 
 public class CharacterAnimations extends Character{
 	private Character character;

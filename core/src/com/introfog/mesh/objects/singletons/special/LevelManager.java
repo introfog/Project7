@@ -8,10 +8,7 @@ import com.introfog.MyGame;
 import com.introfog.addition.parsers.ParseLevel;
 import com.introfog.addition.parsers.ParseSettings;
 import com.introfog.mesh.objects.GameObject;
-import com.introfog.mesh.objects.singletons.Camera;
-import com.introfog.messages.AddObjectMessage;
-import com.introfog.messages.GameMessage;
-import com.introfog.messages.MessageType;
+import com.introfog.messages.*;
 import com.introfog.screens.SelectedModeScreen;
 
 public class LevelManager extends GameObject{
@@ -61,7 +58,6 @@ public class LevelManager extends GameObject{
 	public void createLevel (){
 		ParseLevel.parseLVL (GameSystem.CURRENT_LEVEL);
 		
-		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (Camera.getInstance ()));
 		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (this));
 		
 		if (GameSystem.IS_FIRST_GAME_START){
