@@ -13,8 +13,8 @@ public class MoveMessage extends GameMessage{
 	public float bodyH;
 	
 	
-	public MoveMessage (GameObject object, float deltaX, float deltaY, float oldBodyX, float oldBodyY, float spriteOldX,
-						float spriteOldY, float bodyW, float bodyH){
+	public void initialize (GameObject object, float deltaX, float deltaY, float oldBodyX, float oldBodyY,
+							float spriteOldX, float spriteOldY, float bodyW, float bodyH){
 		this.type = MessageType.move;
 		this.object = object;
 		this.objectType = object.getObjectType ();

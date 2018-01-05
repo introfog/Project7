@@ -3,6 +3,7 @@ package com.introfog.mesh.objects.singletons.special;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
+import com.badlogic.gdx.utils.Pools;
 import com.introfog.GameSystem;
 import com.introfog.MyGame;
 import com.introfog.addition.parsers.ParseLevel;
@@ -58,7 +59,9 @@ public class LevelManager implements GameObject{
 	public void createLevel (){
 		ParseLevel.parseLVL (GameSystem.CURRENT_LEVEL);
 		
-		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (this));
+		AddObjectMessage aom = Pools.obtain (AddObjectMessage.class);
+		aom.initialize (this);
+		ObjectManager.getInstance ().sendMessage (aom);
 		
 		if (GameSystem.IS_FIRST_GAME_START){
 			GameSystem.IS_FIRST_GAME_START = false;

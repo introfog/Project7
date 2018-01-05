@@ -1,6 +1,4 @@
-package com.introfog.mesh.objects.character;
-
-import com.badlogic.gdx.utils.Pools;
+package com.introfog.mesh.objects.singletons.character;
 
 import com.introfog.mesh.body.AnimatedObject;
 import com.introfog.mesh.objects.GameObject;
@@ -16,12 +14,12 @@ public class Character implements GameObject{
 	private static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
 	private static final float BODY_CHARACTER_H = CHARACTER_H / 4;
 	
+	protected CharacterName name = CharacterName.first;
 	protected Direction currentDirection = Direction.forward;
 	protected State state = State.stand;
+	protected AnimatedObject body;
 	
 	private ObjectType objectType;
-	protected AnimatedObject body;
-	protected CharacterName name = CharacterName.first;
 	private CharacterMessageParser parser;
 	private CharacterControl control;
 	private CharacterAnimations animations;
@@ -80,7 +78,6 @@ public class Character implements GameObject{
 		currentDirection = Direction.forward;
 		
 		animations.clear ();
-		Pools.free (this);
 	}
 	
 	@Override

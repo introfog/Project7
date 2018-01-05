@@ -1,8 +1,9 @@
-package com.introfog.mesh.objects.character;
+package com.introfog.mesh.objects.singletons.character;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
+import com.badlogic.gdx.utils.Pools;
 import com.introfog.mesh.objects.State;
 import com.introfog.mesh.objects.singletons.special.ObjectManager;
 import com.introfog.messages.MoveMessage;
@@ -67,18 +68,20 @@ public class CharacterControl extends Character{
 		
 		if (deltaX != 0){
 			character.state = State.move;
-			ObjectManager.getInstance ().addMessage (
-					new MoveMessage (character, deltaX, 0, character.body.getBodyX (), character.body.getBodyY (),
-									 character.body.getSpriteX (), character.body.getSpriteY (), character.body.getBodyW (),
-									 character.body.getBodyH ()));
+			MoveMessage mm = Pools.obtain (MoveMessage.class);
+			mm.initialize (character, deltaX, 0, character.body.getBodyX (), character.body.getBodyY (),
+						   character.body.getSpriteX (), character.body.getSpriteY (), character.body.getBodyW (),
+						   character.body.getBodyH ());
+			ObjectManager.getInstance ().addMessage (mm);
 			character.body.move (deltaX, 0);
 		}
 		if (deltaY != 0){
 			character.state = State.move;
-			ObjectManager.getInstance ().addMessage (
-					new MoveMessage (character, 0, deltaY, character.body.getBodyX () - deltaX,
-									 character.body.getBodyY (), character.body.getSpriteX (), character.body.getSpriteY (),
-									 character.body.getBodyW (), character.body.getBodyH ()));
+			MoveMessage mm = Pools.obtain (MoveMessage.class);
+			mm.initialize (character, 0, deltaY, character.body.getBodyX () - deltaX,
+						   character.body.getBodyY (), character.body.getSpriteX (), character.body.getSpriteY (),
+						   character.body.getBodyW (), character.body.getBodyH ());
+			ObjectManager.getInstance ().addMessage (mm);
 			character.body.move (0, deltaY);
 		}
 	}

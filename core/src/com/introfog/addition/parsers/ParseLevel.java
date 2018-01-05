@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Pools;
 import com.introfog.GameSystem;
 import com.introfog.mesh.objects.*;
 import com.introfog.mesh.objects.box.Box;
-import com.introfog.mesh.objects.character.Character;
+import com.introfog.mesh.objects.singletons.character.Character;
 import com.introfog.mesh.objects.singletons.special.ObjectManager;
 import com.introfog.messages.AddObjectMessage;
 
@@ -51,32 +51,43 @@ public abstract class ParseLevel extends ParseBasis{
 	}
 	
 	private static void createObject (String currObjectGroup){
+		AddObjectMessage aom;
 		switch (currObjectGroup){
 		case "wall":
 			Wall wall = Pools.obtain (Wall.class);
 			wall.setSpritePosition (x, y);
-			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (wall));
+			aom = Pools.obtain (AddObjectMessage.class);
+			aom.initialize (wall);
+			ObjectManager.getInstance ().sendMessage (aom);
 			break;
 		case "characters":
 			Character character;
 			character = Character.getInstance ();
 			character.setSpritePosition (x, y);
-			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (character));
+			aom = Pools.obtain (AddObjectMessage.class);
+			aom.initialize (character);
+			ObjectManager.getInstance ().sendMessage (aom);
 			break;
 		case "invisibleWall":
 			InvisibleWall invisibleWall = Pools.obtain (InvisibleWall.class);
 			invisibleWall.setBodyBounds (x, y, w, h);
-			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (invisibleWall));
+			aom = Pools.obtain (AddObjectMessage.class);
+			aom.initialize (invisibleWall);
+			ObjectManager.getInstance ().sendMessage (aom);
 			break;
 		case "finishLevel":
 			FinishLevel finish = Pools.obtain (FinishLevel.class);
 			finish.setBodyBounds (x, y, w, h);
-			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (finish));
+			aom = Pools.obtain (AddObjectMessage.class);
+			aom.initialize (finish);
+			ObjectManager.getInstance ().sendMessage (aom);
 			break;
 		case "box":
 			Box box = Pools.obtain (Box.class);
 			box.setSpritePosition (x, y);
-			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (box));
+			aom = Pools.obtain (AddObjectMessage.class);
+			aom.initialize (box);
+			ObjectManager.getInstance ().sendMessage (aom);
 			break;
 		}
 	}

@@ -22,11 +22,15 @@ public class InvisibleWall implements GameObject{
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
 			if (msg.deltaX != 0 && body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg));
+				PushOutMessage pom = Pools.obtain (PushOutMessage.class);
+				pom.initialize (msg);
+				ObjectManager.getInstance ().addMessage (pom);
 				return true;
 			}
 			else if (msg.deltaY != 0 && body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg));
+				PushOutMessage pom = Pools.obtain (PushOutMessage.class);
+				pom.initialize (msg);
+				ObjectManager.getInstance ().addMessage (pom);
 				return true;
 			}
 		}

@@ -1,4 +1,4 @@
-package com.introfog.mesh.objects.character;
+package com.introfog.mesh.objects.singletons.character;
 
 import com.introfog.messages.*;
 

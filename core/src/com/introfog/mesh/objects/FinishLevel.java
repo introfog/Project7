@@ -21,9 +21,10 @@ public class FinishLevel implements GameObject{
 	public boolean sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
-			
 			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new CompleteLevelMessage ());
+				CompleteLevelMessage clm = Pools.obtain (CompleteLevelMessage.class);
+				clm.initialize ();
+				ObjectManager.getInstance ().addMessage (clm);
 				return true;
 			}
 		}

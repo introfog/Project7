@@ -1,7 +1,7 @@
 package com.introfog.messages;
 
 public class CompleteLevelMessage extends GameMessage{
-	public CompleteLevelMessage (){
+	public void initialize (){
 		this.type = MessageType.levelComplete;
 	}
 }

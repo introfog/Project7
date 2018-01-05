@@ -5,8 +5,7 @@ import com.badlogic.gdx.utils.Pools;
 
 import com.introfog.mesh.objects.*;
 import com.introfog.mesh.objects.box.Box;
-import com.introfog.messages.GameMessage;
-import com.introfog.messages.MessageType;
+import com.introfog.messages.*;
 import com.introfog.render.Render;
 
 import java.util.LinkedList;
@@ -24,7 +23,7 @@ public class ObjectManager implements GameObject{
 		messages = new LinkedList <> ();
 		objects = new LinkedList <> ();
 		
-		Pools.set (Wall.class, new Pool <Wall> (200, 400){
+		Pools.set (Wall.class, new Pool <Wall> (100, 400){
 			@Override
 			protected Wall newObject (){
 				return new Wall ();
@@ -46,6 +45,31 @@ public class ObjectManager implements GameObject{
 			@Override
 			protected InvisibleWall newObject (){
 				return new InvisibleWall ();
+			}
+		});
+		
+		Pools.set (AddObjectMessage.class, new Pool <AddObjectMessage> (20, 100){
+			@Override
+			protected AddObjectMessage newObject (){
+				return new AddObjectMessage ();
+			}
+		});
+		Pools.set (CompleteLevelMessage.class, new Pool <CompleteLevelMessage> (1, 5){
+			@Override
+			protected CompleteLevelMessage newObject (){
+				return new CompleteLevelMessage ();
+			}
+		});
+		Pools.set (MoveMessage.class, new Pool <MoveMessage> (16, 31){
+			@Override
+			protected MoveMessage newObject (){
+				return new MoveMessage ();
+			}
+		});
+		Pools.set (PushOutMessage.class, new Pool <PushOutMessage> (3, 5){
+			@Override
+			protected PushOutMessage newObject (){
+				return new PushOutMessage ();
 			}
 		});
 	}
@@ -70,17 +94,15 @@ public class ObjectManager implements GameObject{
 					break;
 				}
 			}
+			Pools.free (msg);
 		}
 	}
 	
 	@Override
 	public boolean sendMessage (GameMessage message){
-		if (message.type == MessageType.deleteObject){
-			objects.remove (message.object);
-			return true;
-		}
-		else if (message.type == MessageType.addObject){
+		if (message.type == MessageType.addObject){
 			objects.add (message.object);
+			Pools.free (message);
 			return true;
 		}
 		return false;
