@@ -12,6 +12,7 @@ import java.util.LinkedList;
 
 public class ObjectManager implements GameObject{
 	private LinkedList <GameMessage> messages;
+	private LinkedList <GameMessage> messageLink;
 	private LinkedList <GameObject> objects;
 	
 	
@@ -21,6 +22,7 @@ public class ObjectManager implements GameObject{
 	
 	private ObjectManager (){
 		messages = new LinkedList <> ();
+		messageLink = new LinkedList <> ();
 		objects = new LinkedList <> ();
 		
 		Pools.set (Wall.class, new Pool <Wall> (100, 400){
@@ -86,15 +88,19 @@ public class ObjectManager implements GameObject{
 		for (int i = objects.size () - 1; i > -1 && !objects.isEmpty (); i--){
 			objects.get (i).update ();
 		}
+		
 		while (!messages.isEmpty ()){
 			GameMessage msg = messages.remove ();
+			messageLink.add (msg);
 			
 			for (int i = objects.size () - 1; i > -1 && !objects.isEmpty (); i--){
 				if (objects.get (i).sendMessage (msg)){
 					break;
 				}
 			}
-			Pools.free (msg);
+		}
+		while (!messageLink.isEmpty ()){
+			Pools.free (messageLink.remove ());
 		}
 	}
 	

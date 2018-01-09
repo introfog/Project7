@@ -70,18 +70,18 @@ public class CharacterControl extends Character{
 			character.state = State.move;
 			MoveMessage mm = Pools.obtain (MoveMessage.class);
 			mm.initialize (character, deltaX, 0, character.body.getBodyX (), character.body.getBodyY (),
-						   character.body.getSpriteX (), character.body.getSpriteY (), character.body.getBodyW (),
-						   character.body.getBodyH ());
+						   character.body.getBodyW (), character.body.getBodyH ());
 			ObjectManager.getInstance ().addMessage (mm);
 			character.body.move (deltaX, 0);
+			
 		}
 		if (deltaY != 0){
 			character.state = State.move;
 			MoveMessage mm = Pools.obtain (MoveMessage.class);
 			mm.initialize (character, 0, deltaY, character.body.getBodyX () - deltaX,
-						   character.body.getBodyY (), character.body.getSpriteX (), character.body.getSpriteY (),
-						   character.body.getBodyW (), character.body.getBodyH ());
+						   character.body.getBodyY (), character.body.getBodyW (), character.body.getBodyH ());
 			ObjectManager.getInstance ().addMessage (mm);
+			
 			character.body.move (0, deltaY);
 		}
 	}

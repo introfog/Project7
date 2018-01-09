@@ -34,15 +34,15 @@ public class Wall implements GameObject{
 	public boolean sendMessage (GameMessage message){
 		if (message.type == MessageType.move){
 			MoveMessage msg = (MoveMessage) message;
-			if (msg.deltaX != 0 && body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
+			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 				PushOutMessage pom = Pools.obtain (PushOutMessage.class);
 				pom.initialize (msg);
-				ObjectManager.getInstance ().addMessage (pom);
-				return true;
-			}
-			else if (msg.deltaY != 0 && body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				PushOutMessage pom = Pools.obtain (PushOutMessage.class);
-				pom.initialize (msg);
+				/*if (body.getX () < msg.oldBodyX){
+					pom.undo.deltaX += (msg.oldBodyX - (body.getX () + body.getW ()));
+				}
+				else{
+					pom.undo.deltaX -= (body.getX () - (msg.oldBodyX + msg.bodyW));
+				}*/
 				ObjectManager.getInstance ().addMessage (pom);
 				return true;
 			}
