@@ -10,9 +10,8 @@ import com.introfog.messages.*;
 public class Character implements GameObject{
 	protected static final float CHARACTER_W = UNIT;
 	protected static final float CHARACTER_H = UNIT;
-	
-	private static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
-	private static final float BODY_CHARACTER_H = CHARACTER_H / 4;
+	protected static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
+	protected static final float BODY_CHARACTER_H = CHARACTER_H / 4;
 	
 	protected CharacterName name = CharacterName.first;
 	protected Direction currentDirection = Direction.forward;
@@ -57,8 +56,9 @@ public class Character implements GameObject{
 	
 	@Override
 	public void update (){
-		animations.update ();
+		parser.update ();
 		control.update ();
+		animations.update ();
 	}
 	
 	@Override
