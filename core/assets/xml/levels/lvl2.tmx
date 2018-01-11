@@ -119,7 +119,7 @@
   <object id="133" x="768" y="720" width="64" height="48"/>
   <object id="143" x="64" y="816" width="64" height="48"/>
  </objectgroup>
- <objectgroup name="characters">
+ <objectgroup name="character">
   <object id="107" x="256" y="1008" width="64" height="48"/>
  </objectgroup>
  <objectgroup name="finishLevel">

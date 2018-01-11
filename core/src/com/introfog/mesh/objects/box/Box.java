@@ -27,7 +27,6 @@ public class Box implements GameObject{
 	public Box (boolean fictiv){ //нужен фиктивный параметр, что бы не зацикливалось создание ящика.
 		objectType = ObjectType.box;
 		body = new AnimatedObject (0, 0, BOX_W, BOX_H, BODY_BOX_W, BODY_BOX_H);
-		body.move (0, 0.5f);
 		
 		parser = new BoxMessageParser (this);
 		animations = new BoxAnimations (this);
@@ -35,6 +34,7 @@ public class Box implements GameObject{
 	
 	public void setSpritePosition (float x, float y){
 		body.setSpritePosition (x, y);
+		body.move (0, 0.5f);
 	}
 	
 	@Override

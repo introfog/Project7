@@ -29,7 +29,6 @@ public class Character implements GameObject{
 		this.name = name;
 		
 		body = new AnimatedObject (0, 0, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
-		body.move (0, 0.25f);
 		
 		parser = new CharacterMessageParser (this);
 		control = new CharacterControl (this);
@@ -56,9 +55,10 @@ public class Character implements GameObject{
 	
 	@Override
 	public void update (){
+		//именно animations первое
+		animations.update ();
 		parser.update ();
 		control.update ();
-		animations.update ();
 	}
 	
 	@Override

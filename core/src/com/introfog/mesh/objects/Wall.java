@@ -37,12 +37,6 @@ public class Wall implements GameObject{
 			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 				PushOutMessage pom = Pools.obtain (PushOutMessage.class);
 				pom.initialize (msg);
-				/*if (body.getX () < msg.oldBodyX){
-					pom.undo.deltaX += (msg.oldBodyX - (body.getX () + body.getW ()));
-				}
-				else{
-					pom.undo.deltaX -= (body.getX () - (msg.oldBodyX + msg.bodyW));
-				}*/
 				ObjectManager.getInstance ().addMessage (pom);
 				return true;
 			}

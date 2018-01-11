@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.introfog.GameSystem;
 import com.introfog.mesh.objects.GameObject;
 
+import com.introfog.mesh.objects.singletons.special.LevelManager;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -32,15 +33,14 @@ public class Floor{
 		floor = new ArrayList <> (numRegions);
 		for (int i = 0; i < numRegions; i++){
 			Sprite sprite = new Sprite (regions[i]);
-			sprite.setSize (GameObject.UNIT, GameObject.UNIT * GameObject.ANGLE);
+			sprite.setSize (w * GameObject.ASPECT_RATIO + 1, h * GameObject.ASPECT_RATIO + 1);
 			floor.add (sprite);
 		}
 		
 		coordinates = new ArrayList <> ();
 		int sprite;
-		int numFloorW = (int) ((GameSystem.SCREEN_W - 2 * GameSystem.INDENT_BETWEEN_SCREEN_LEVEL) / GameObject.UNIT);
-		for (int i = 0; i < numFloorW; i++){
-			for (int j = 0; j < 100; j++){
+		for (int i = 0; i < LevelManager.NUM_TILE_W; i++){
+			for (int j = 0; j < LevelManager.NUM_TILE_H; j++){
 				sprite = MathUtils.random (0, numRegions - 1);
 				coordinates.add (new Pair <> (new Pair <>(i, j), sprite));
 			}
@@ -51,7 +51,7 @@ public class Floor{
 		int x;
 		int y;
 		for (Pair <Pair <Integer, Integer>, Integer> tmpP : coordinates){
-			x = (int) (tmpP.getKey ().getKey () * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL);
+			x = (int) (tmpP.getKey ().getKey () * GameObject.UNIT);
 			y = (int) (tmpP.getKey ().getValue () * GameObject.UNIT * GameObject.ANGLE);
 			floor.get (tmpP.getValue ()).setPosition (x, y);
 			floor.get (tmpP.getValue ()).draw (batch);

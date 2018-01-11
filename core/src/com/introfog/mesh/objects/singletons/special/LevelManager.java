@@ -13,6 +13,10 @@ import com.introfog.messages.*;
 import com.introfog.screens.SelectedModeScreen;
 
 public class LevelManager implements GameObject{
+	public static float NUM_TILE_W;
+	public static float NUM_TILE_H;
+	
+	
 	private void completeLevel (){
 		ObjectManager.getInstance ().clear ();
 		

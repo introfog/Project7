@@ -2,11 +2,10 @@ package com.introfog.addition.parsers;
 
 import com.badlogic.gdx.utils.Pools;
 
-import com.introfog.GameSystem;
 import com.introfog.mesh.objects.*;
 import com.introfog.mesh.objects.box.Box;
 import com.introfog.mesh.objects.singletons.character.Character;
-import com.introfog.mesh.objects.singletons.special.ObjectManager;
+import com.introfog.mesh.objects.singletons.special.*;
 import com.introfog.messages.AddObjectMessage;
 
 import org.w3c.dom.Document;
@@ -24,18 +23,12 @@ public abstract class ParseLevel extends ParseBasis{
 	
 	
 	private static void additionalCalculates (Node map){
+		LevelManager.NUM_TILE_W = Integer.parseInt (map.getAttributes ().item (8).getTextContent ());
+		
 		levelH = Integer.parseInt (map.getAttributes ().item (5).getTextContent ()); //tile height
-		int height = Integer.parseInt (map.getAttributes ().item (0).getTextContent ());
-		levelH *= height;
+		LevelManager.NUM_TILE_H = Integer.parseInt (map.getAttributes ().item (0).getTextContent ());
+		levelH *= LevelManager.NUM_TILE_H;
 		levelH *= ASPECT_RATIO;
-		
-		//ширина уровня умноженная на аспект ратио
-		int levelW = Integer.parseInt (map.getAttributes ().item (6).getTextContent ()); //tile width
-		int width = Integer.parseInt (map.getAttributes ().item (8).getTextContent ());
-		levelW *= width;
-		levelW *= ASPECT_RATIO;
-		
-		GameSystem.INDENT_BETWEEN_SCREEN_LEVEL = (GameSystem.SCREEN_W - levelW) / 2;
 	}
 	
 	private static void parseCoordinates (Node object){
@@ -45,7 +38,7 @@ public abstract class ParseLevel extends ParseBasis{
 		h *= ASPECT_RATIO;
 		
 		x = Float.parseFloat (object.getAttributes ().item (3).getTextContent ());
-		x = x * ASPECT_RATIO + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL;
+		x = x * ASPECT_RATIO;
 		y = Float.parseFloat (object.getAttributes ().item (4).getTextContent ());
 		y = levelH - y * ASPECT_RATIO - h;
 	}
@@ -60,7 +53,7 @@ public abstract class ParseLevel extends ParseBasis{
 			aom.initialize (wall);
 			ObjectManager.getInstance ().sendMessage (aom);
 			break;
-		case "characters":
+		case "character":
 			Character character;
 			character = Character.getInstance ();
 			character.setSpritePosition (x, y);
