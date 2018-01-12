@@ -1,8 +1,6 @@
 package com.introfog.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,76 +11,61 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.introfog.MyGame;
 
-public class SettingsScreen implements Screen{
+public class SettingsScreen extends ScreenAdapter{
+	private static boolean pushBack = false;
+	
 	private WidgetGroup widgetGroup;
 	private Stage stage;
+	private TextButton video = new TextButton ("Видео", TextStyle.getInstance ().normalStyle);
+	private TextButton control = new TextButton ("Управление", TextStyle.getInstance ().normalStyle);
+	private TextButton sound = new TextButton ("Звук", TextStyle.getInstance ().normalStyle);
+	private TextButton back = new TextButton ("Назад", TextStyle.getInstance ().normalStyle);
 	
 	
-	private void createVideoButton (){
-		TextButton video;
-		video = new TextButton ("Видео", TextStyle.getInstance ().normalStyle);
-		video.addListener (new ClickListener (){
-			@Override
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				/////////////////////////
-			}
-		});
+	private void initializeVideoButton (){
 		video.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
 				Gdx.graphics.getHeight () / 2 + 2 * MyGame.BUTTON_H + 2 * MyGame.DISTANCE_BETWEEN_BUTTONS,
 				MyGame.BUTTON_W, MyGame.BUTTON_H);
 		widgetGroup.addActor (video);
 	}
 	
-	private void createControlButton (){
-		TextButton control;
-		control = new TextButton ("Управление", TextStyle.getInstance ().normalStyle);
-		control.addListener (new ClickListener (){
-			@Override
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				//////////////////////
-			}
-		});
+	private void initializeControlButton (){
 		control.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
 				Gdx.graphics.getHeight () / 2 + MyGame.BUTTON_H + MyGame.DISTANCE_BETWEEN_BUTTONS,
 				MyGame.BUTTON_W, MyGame.BUTTON_H);
 		widgetGroup.addActor (control);
 	}
 	
-	private void createSoundButton (){
-		TextButton sound;
-		sound = new TextButton ("Звук", TextStyle.getInstance ().normalStyle);
-		sound.addListener (new ClickListener (){
-			@Override
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				////////////////////
-			}
-		});
+	private void initializeSoundButton (){
 		sound.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
 				Gdx.graphics.getHeight () / 2,
 				MyGame.BUTTON_W, MyGame.BUTTON_H);
 		widgetGroup.addActor (sound);
 	}
 	
-	private void createBackButton (){
-		TextButton back;
-		back = new TextButton ("Назад", TextStyle.getInstance ().normalStyle);
-		back.addListener (new ClickListener (){
+	private void initializeBackButton (){
+		pushBack = false;
+		ClickListener forBack = new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (MainMenuScreen.getInstance ());
+				if (!pushBack){
+					MyGame.getInstance ().setScreen (MainMenuScreen.getInstance ());
+					pushBack = true;
+				}
 			}
-		});
+		};
+		back.addListener (forBack);
 		back.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
 				Gdx.graphics.getHeight () / 2 - MyGame.BUTTON_H - MyGame.DISTANCE_BETWEEN_BUTTONS,
 				MyGame.BUTTON_W, MyGame.BUTTON_H);
 		widgetGroup.addActor (back);
 	}
 	
-	private void createButton (){
-		createVideoButton ();
-		createControlButton ();
-		createSoundButton ();
-		createBackButton ();
+	private void initializeButton (){
+		initializeVideoButton ();
+		initializeControlButton ();
+		initializeSoundButton ();
+		initializeBackButton ();
 		
 		stage.addActor (widgetGroup);
 	}
@@ -96,7 +79,7 @@ public class SettingsScreen implements Screen{
 		widgetGroup = new WidgetGroup ();
 		stage = new Stage (new ScreenViewport ());
 		
-		createButton ();
+		initializeButton ();
 	}
 	
 	
@@ -104,10 +87,9 @@ public class SettingsScreen implements Screen{
 		return SettingsScreenHolder.instance;
 	}
 	
-	
 	@Override
 	public void show (){
-		createButton ();
+		initializeButton ();
 		
 		// Устанавливаем нашу сцену основным процессором для ввода
 		Gdx.input.setInputProcessor (stage);
@@ -125,19 +107,4 @@ public class SettingsScreen implements Screen{
 		stage.act (delta);
 		stage.draw ();
 	}
-	
-	@Override
-	public void resize (int width, int height){ }
-	
-	@Override
-	public void pause (){ }
-	
-	@Override
-	public void resume (){ }
-	
-	@Override
-	public void hide (){ }
-	
-	@Override
-	public void dispose (){ }
 }

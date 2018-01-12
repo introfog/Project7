@@ -56,9 +56,11 @@ public class Character implements GameObject{
 	@Override
 	public void update (){
 		//именно animations первое
-		animations.update ();
-		parser.update ();
+		
+		
 		control.update ();
+		parser.update ();
+		
 	}
 	
 	@Override
@@ -68,6 +70,7 @@ public class Character implements GameObject{
 	
 	@Override
 	public void draw (){
+		animations.update ();
 		animations.draw ();
 		Camera.getInstance ().setPosition (body.getBodyX () + CHARACTER_W / 2, body.getBodyY () + CHARACTER_H / 2);
 	}

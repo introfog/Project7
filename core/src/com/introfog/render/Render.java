@@ -11,7 +11,8 @@ import com.introfog.mesh.objects.singletons.Camera;
 import java.util.LinkedList;
 
 public class Render{
-	private Floor floor;
+	public Floor floor;
+	
 	private SpriteBatch batch;
 	private LinkedList <DataRender> renderList;
 	

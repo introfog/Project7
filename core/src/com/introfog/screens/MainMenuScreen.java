@@ -1,7 +1,6 @@
 package com.introfog.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,59 +11,74 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.introfog.MyGame;
 
-public class MainMenuScreen implements Screen{
+public class MainMenuScreen extends ScreenAdapter{
+	private static boolean pushPlay = false;
+	private static boolean pushSettings = false;
+	private static boolean pushExit = false;
+	
 	private WidgetGroup widgetGroup;
 	private Stage stage;
+	private TextButton play = new TextButton ("Играть", TextStyle.getInstance ().normalStyle);
+	private TextButton settings = new TextButton ("Настройки", TextStyle.getInstance ().normalStyle);
+	private TextButton exit = new TextButton ("Выход", TextStyle.getInstance ().normalStyle);
 	
 	
-	private void createPlayButton (){
-		TextButton play;
-		play = new TextButton ("Играть", TextStyle.getInstance ().normalStyle);
+	private void initializePlayButton (){
+		pushPlay = false;
 		play.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (SelectedModeScreen.getInstance ());
+				if (!pushPlay){
+					MyGame.getInstance ().setScreen (SelectedModeScreen.getInstance ());
+					pushPlay = true;
+				}
 			}
 		});
 		play.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
-				Gdx.graphics.getHeight () / 2 + MyGame.BUTTON_H + MyGame.DISTANCE_BETWEEN_BUTTONS,
-				MyGame.BUTTON_W, MyGame.BUTTON_H);
+						Gdx.graphics.getHeight () / 2 + MyGame.BUTTON_H + MyGame.DISTANCE_BETWEEN_BUTTONS,
+						MyGame.BUTTON_W, MyGame.BUTTON_H);
 		widgetGroup.addActor (play);
 	}
 	
-	private void createSettingsButton (){
-		TextButton settings;
-		settings = new TextButton ("Настройки", TextStyle.getInstance ().normalStyle);
-		settings.addListener (new ClickListener (){
+	private void initializeSettingsButton (){
+		pushSettings = false;
+		ClickListener forSettings = new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (SettingsScreen.getInstance ());
+				if (!pushSettings){
+					MyGame.getInstance ().setScreen (SettingsScreen.getInstance ());
+					pushSettings = true;
+				}
 			}
-		});
+		};
+		settings.addListener (forSettings);
 		settings.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
 				Gdx.graphics.getHeight () / 2, MyGame.BUTTON_W, MyGame.BUTTON_H);
 		widgetGroup.addActor (settings);
 	}
 	
-	private void createExitButton (){
-		TextButton exit;
-		exit = new TextButton ("Выход", TextStyle.getInstance ().normalStyle);
-		exit.addListener (new ClickListener (){
+	private void initializeExitButton (){
+		pushExit = false;
+		ClickListener forExit = new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (QuitGameScreen.getInstance ());
+				if (!pushExit){
+					MyGame.getInstance ().setScreen (QuitGameScreen.getInstance ());
+					pushExit = true;
+				}
 			}
-		});
+		};
+		exit.addListener (forExit);
 		exit.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
 				Gdx.graphics.getHeight () / 2 - MyGame.BUTTON_H - MyGame.DISTANCE_BETWEEN_BUTTONS,
 				MyGame.BUTTON_W, MyGame.BUTTON_H);
 		widgetGroup.addActor (exit);
 	}
 	
-	private void createButton (){
-		createPlayButton ();
-		createSettingsButton ();
-		createExitButton ();
+	private void initializeButton (){
+		initializePlayButton ();
+		initializeSettingsButton ();
+		initializeExitButton ();
 		
 		stage.addActor (widgetGroup);
 	}
@@ -77,7 +91,7 @@ public class MainMenuScreen implements Screen{
 		widgetGroup = new WidgetGroup ();
 		stage = new Stage (new ScreenViewport ());
 		
-		createButton ();
+		initializeButton ();
 	}
 	
 	
@@ -87,7 +101,7 @@ public class MainMenuScreen implements Screen{
 	
 	@Override
 	public void show (){
-		createButton ();
+		initializeButton ();
 		
 		// Устанавливаем нашу сцену основным процессором для ввода
 		Gdx.input.setInputProcessor (stage);
@@ -101,19 +115,4 @@ public class MainMenuScreen implements Screen{
 		stage.act (delta);
 		stage.draw ();
 	}
-	
-	@Override
-	public void resize (int width, int height){ }
-	
-	@Override
-	public void pause (){ }
-	
-	@Override
-	public void resume (){ }
-	
-	@Override
-	public void hide (){ }
-	
-	@Override
-	public void dispose (){ }
 }

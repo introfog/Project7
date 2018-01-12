@@ -6,22 +6,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 
-import com.introfog.GameSystem;
 import com.introfog.mesh.objects.GameObject;
-
 import com.introfog.mesh.objects.singletons.special.LevelManager;
+
 import javafx.util.Pair;
 
 import java.util.ArrayList;
 
 public class Floor{
+	private int numRegions;
 	private ArrayList <Pair <Pair <Integer, Integer>, Integer>> coordinates;
 	private ArrayList <Sprite> floor;
 	
 	
 	public Floor (){
 		Texture texture = new Texture ("core/assets/images/other/floor.png");
-		int numRegions = (int) (texture.getWidth () / (GameObject.UNIT / GameObject.ASPECT_RATIO));
+		numRegions = (int) (texture.getWidth () / (GameObject.UNIT / GameObject.ASPECT_RATIO));
 		int w = texture.getWidth () / numRegions;
 		int h = texture.getHeight ();
 		TextureRegion[] regions = new TextureRegion[numRegions];
@@ -37,6 +37,17 @@ public class Floor{
 			floor.add (sprite);
 		}
 		
+		coordinates = new ArrayList <> ();
+		int sprite;
+		for (int i = 0; i < LevelManager.NUM_TILE_W; i++){
+			for (int j = 0; j < LevelManager.NUM_TILE_H; j++){
+				sprite = MathUtils.random (0, numRegions - 1);
+				coordinates.add (new Pair <> (new Pair <>(i, j), sprite));
+			}
+		}
+	}
+	
+	public void updateSize (){
 		coordinates = new ArrayList <> ();
 		int sprite;
 		for (int i = 0; i < LevelManager.NUM_TILE_W; i++){

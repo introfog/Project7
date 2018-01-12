@@ -10,6 +10,7 @@ import com.introfog.addition.parsers.ParseLevel;
 import com.introfog.addition.parsers.ParseSettings;
 import com.introfog.mesh.objects.GameObject;
 import com.introfog.messages.*;
+import com.introfog.render.Render;
 import com.introfog.screens.SelectedModeScreen;
 
 public class LevelManager implements GameObject{
@@ -71,6 +72,8 @@ public class LevelManager implements GameObject{
 			GameSystem.IS_FIRST_GAME_START = false;
 			ParseSettings.writeSettings ();
 		}
+		
+		Render.getInstance ().floor.updateSize ();
 	}
 	
 	public void updateLevel (){
