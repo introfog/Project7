@@ -18,7 +18,7 @@ import java.net.URLDecoder;
 
 public class ParseSettings extends ParseBasis{
 	private static String fromIDEA = "core/assets/xml/settings.xml";
-	private static String fromDesktop = "/resource/xml/settings.xml";
+	private static String fromDesktop = "resource\\xml\\settings.xml";
 	
 	
 	private static void saveChanges (Document document){
@@ -50,7 +50,7 @@ public class ParseSettings extends ParseBasis{
 	
 	public static void parseSettings (){
 		String currField;
-		Document document = getDocument (fromIDEA, fromDesktop);
+		Document document = getDocument (fromDesktop);
 		Node root = document.getDocumentElement ();
 		
 		NodeList fieldList = root.getChildNodes ();
@@ -83,7 +83,7 @@ public class ParseSettings extends ParseBasis{
 	
 	public static void writeSettings (){
 		String currField;
-		Document document = getDocument (fromIDEA, fromDesktop);
+		Document document = getDocument (fromDesktop);
 		Node root = document.getDocumentElement ();
 		
 		NodeList fieldList = root.getChildNodes ();

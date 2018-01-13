@@ -97,8 +97,7 @@ public abstract class ParseLevel extends ParseBasis{
 	
 	
 	public static void parseLVL (int level){
-		XMLStreamReader xmlReader = getXML ("core/assets/xml/levels/lvl" + String.valueOf (level) + ".tmx",
-											"/resource/xml/levels/lvl" + String.valueOf (level) + ".tmx");
+		XMLStreamReader xmlReader = getXML ("resource/xml/levels/lvl" + String.valueOf (level) + ".tmx");
 		
 		additionalCalculates (xmlReader);
 		

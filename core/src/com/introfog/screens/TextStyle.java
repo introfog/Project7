@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import com.introfog.MyGame;
+import com.introfog.addition.parsers.ParseBasis;
 
 public class TextStyle{
 	public Label.LabelStyle labelStyle;
@@ -15,21 +16,21 @@ public class TextStyle{
 	
 	
 	private void createStyle (){
-		TextureAtlas buttonAtlas = new TextureAtlas ("core/assets/images/button/button.atlas");
+		TextureAtlas buttonAtlas = new TextureAtlas (ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/button/button.atlas");
 		Skin skin = new Skin ();
 		skin.addRegions (buttonAtlas);
 		
 		normalStyle = new TextButton.TextButtonStyle ();
-		normalStyle.font = Font.generateFont ("core/assets/fonts/russoone.ttf", MyGame.BUTTON_FONT_SIZE, Color.WHITE);
+		normalStyle.font = Font.generateFont (ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/fonts/russoone.ttf", MyGame.BUTTON_FONT_SIZE, Color.WHITE);
 		normalStyle.up = skin.getDrawable ("button_up");
 		normalStyle.over = skin.getDrawable ("button_checked");
 		normalStyle.down = skin.getDrawable ("button_checked");
 		
 		labelStyle = new Label.LabelStyle ();
-		labelStyle.font = Font.generateFont ("core/assets/fonts/russoone.ttf", MyGame.BUTTON_FONT_SIZE, Color.WHITE);
+		labelStyle.font = Font.generateFont (ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/fonts/russoone.ttf", MyGame.BUTTON_FONT_SIZE, Color.WHITE);
 		
 		closedStyle = new TextButton.TextButtonStyle ();
-		closedStyle.font = Font.generateFont ("core/assets/fonts/russoone.ttf", MyGame.BUTTON_FONT_SIZE, Color.WHITE);
+		closedStyle.font = Font.generateFont (ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/fonts/russoone.ttf", MyGame.BUTTON_FONT_SIZE, Color.WHITE);
 		closedStyle.up = skin.getDrawable ("button_closed");
 	}
 	

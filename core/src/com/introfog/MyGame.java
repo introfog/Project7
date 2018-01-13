@@ -2,7 +2,7 @@ package com.introfog;
 
 import com.badlogic.gdx.Game;
 
-import com.introfog.addition.parsers.ParseSettings;
+import com.introfog.addition.parsers.*;
 import com.introfog.mesh.objects.GameObject;
 import com.introfog.screens.MainMenuScreen;
 
@@ -26,6 +26,7 @@ public class MyGame extends Game{
 	
 	@Override
 	public void create (){
+		ParseBasis.findAbsolutePath ();
 		ParseSettings.parseSettings ();
 		setScreen (MainMenuScreen.getInstance ());
 	}

@@ -15,8 +15,31 @@ import java.net.*;
 import java.nio.charset.Charset;
 
 public abstract class ParseBasis{
+	public static String ABSOLUTE_PATH_TO_PROJECT = "";
+	
+	
 	protected static boolean isFromIDEA = true; //флаг, хранящий откуда мы запускаем проект, с IDEA или с .jar архива
 	
+	
+	public static void findAbsolutePath (){
+		URL location = ParseBasis.class.getProtectionDomain ().getCodeSource ().getLocation ();
+		
+		try{
+			String classLocation = URLDecoder.decode (location.getFile ().substring (1).replace ('/', File.separatorChar), Charset.defaultCharset ().name ());
+			StringBuilder path = new StringBuilder (classLocation);
+			if (path.lastIndexOf (GameSystem.NAME_JAR_ARCHIVE) == -1){
+				path.delete (path.lastIndexOf ("core"), path.length ());
+				ABSOLUTE_PATH_TO_PROJECT = path.toString ();
+			}
+			else{
+				path.delete (path.lastIndexOf (GameSystem.NAME_JAR_ARCHIVE), path.length ());
+				ABSOLUTE_PATH_TO_PROJECT = path.toString ();
+			}
+		}
+		catch (UnsupportedEncodingException ex){
+			ex.printStackTrace (System.out);
+		}
+	}
 	
 	private static String getAbsolutePath (){
 		URL location = ParseBasis.class.getProtectionDomain ().getCodeSource ().getLocation ();
@@ -32,24 +55,15 @@ public abstract class ParseBasis{
 		return classLocation;
 	}
 	
-	protected static Document getDocument (String fromIDEA, String fromDesktop){
+	protected static Document getDocument (String path){
 		Document document;
 		try{
 			DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance ().newDocumentBuilder ();
 			
-			StringBuilder path = new StringBuilder (getAbsolutePath ());
-			int index = path.lastIndexOf (GameSystem.NAME_JAR_ARCHIVE); //ищем в этом пути имя архива
-			if (index == -1){ //если не нашли, значит мы запускаем проект с IDEA
-				isFromIDEA = true;
-				document = documentBuilder.parse (fromIDEA);
-			}
-			else{ //если нашли, значит запускаем с .jar архива
-				isFromIDEA = false;
-				path.delete (index, path.length ()); //удаляем все начиная с имя архива
-				path.append (fromDesktop);
-				document = documentBuilder.parse (path.toString ());
-			}
-			
+			String tmpS = ABSOLUTE_PATH_TO_PROJECT + path;
+			System.out.println ("Path: " + tmpS);
+			//крч я думаю дело в том что нужны другой слэш
+			document = documentBuilder.parse (tmpS);
 			
 			return document;
 		}
@@ -59,26 +73,12 @@ public abstract class ParseBasis{
 		}
 	}
 	
-	protected static XMLStreamReader getXML (String fromIDEA, String fromDesktop){
-		XMLStreamReader xmlr;
+	protected static XMLStreamReader getXML (String path){
+		XMLStreamReader xmlReader;
 		try{
-			URLDecoder decoder = new URLDecoder ();
-			StringBuilder path = new StringBuilder (decoder.decode (
-					ParseBasis.class.getProtectionDomain ().getCodeSource ().getLocation ().getPath ()));
-			int index = path.lastIndexOf (GameSystem.NAME_JAR_ARCHIVE); //ищем в этом пути имя архива
-			if (index == -1){ //если не нашли, значит мы запускаем проект с IDEA
-				isFromIDEA = true;
-				xmlr = XMLInputFactory.newInstance ().createXMLStreamReader (fromIDEA, new FileInputStream (fromIDEA));
-			}
-			else{ //если нашли, значит запускаем с .jar архива
-				isFromIDEA = false;
-				path.delete (index, path.length ()); //удаляем все начиная с имя архива
-				path.append (fromDesktop);
-				xmlr = XMLInputFactory.newInstance ().createXMLStreamReader (path.toString (),
-																			 new FileInputStream (path.toString ()));
-			}
-			
-			return xmlr;
+			String tmpS = ABSOLUTE_PATH_TO_PROJECT + path;
+			xmlReader = XMLInputFactory.newInstance ().createXMLStreamReader (tmpS, new FileInputStream (tmpS));
+			return xmlReader;
 		}
 		catch (IOException | XMLStreamException ex){
 			ex.printStackTrace (System.out);
