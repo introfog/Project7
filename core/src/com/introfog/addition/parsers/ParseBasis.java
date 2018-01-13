@@ -18,35 +18,26 @@ public abstract class ParseBasis{
 	protected static boolean isFromIDEA = true; //флаг, хранящий откуда мы запускаем проект, с IDEA или с .jar архива
 	
 	
-	private static void currentDir2 (){
+	private static String getAbsolutePath (){
 		URL location = ParseBasis.class.getProtectionDomain ().getCodeSource ().getLocation ();
-		
 		String classLocation = null;
 		
 		try{
-			classLocation = URLDecoder.decode (location.getFile ().substring (1).replace ('/', File.separatorChar),
-											   Charset.defaultCharset ().name ()) + ParseBasis.class.getName ().replace (
-					'.', File.separatorChar) + ".class";
+			classLocation = URLDecoder.decode (location.getFile ().substring (1).replace ('/', File.separatorChar), Charset.defaultCharset ().name ());
 		}
-		catch (UnsupportedEncodingException e){
-			System.out.println ("Encoding ERROR!");
+		catch (UnsupportedEncodingException ex){
+			ex.printStackTrace (System.out);
 		}
 		
-		System.out.println (classLocation);
+		return classLocation;
 	}
 	
 	protected static Document getDocument (String fromIDEA, String fromDesktop){
 		Document document;
-		XMLStreamReader xmlr;
 		try{
 			DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance ().newDocumentBuilder ();
 			
-			currentDir2 ();
-			
-			URLDecoder decoder = new URLDecoder ();
-			//строкой ниже мы полчили абсолютный путь к месту где находится файл класса ParseBasis
-			StringBuilder path = new StringBuilder (decoder.decode (
-					ParseBasis.class.getProtectionDomain ().getCodeSource ().getLocation ().getPath ()));
+			StringBuilder path = new StringBuilder (getAbsolutePath ());
 			int index = path.lastIndexOf (GameSystem.NAME_JAR_ARCHIVE); //ищем в этом пути имя архива
 			if (index == -1){ //если не нашли, значит мы запускаем проект с IDEA
 				isFromIDEA = true;
@@ -58,6 +49,7 @@ public abstract class ParseBasis{
 				path.append (fromDesktop);
 				document = documentBuilder.parse (path.toString ());
 			}
+			
 			
 			return document;
 		}
