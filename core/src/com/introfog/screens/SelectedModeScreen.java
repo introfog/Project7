@@ -33,9 +33,15 @@ public class SelectedModeScreen extends ScreenAdapter{
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
 				if (!pushNewGame){
-					LevelManager.getInstance ().newGame ();
-					MyGame.getInstance ().setScreen (PlayScreen.getInstance ());
-					pushNewGame = true;
+					if (GameSystem.IS_FIRST_GAME_START){
+						LevelManager.getInstance ().newGame ();
+						MyGame.getInstance ().setScreen (PlayScreen.getInstance ());
+						pushNewGame = true;
+					}
+					else{
+						MyGame.getInstance ().setScreen (QuestionNewGameScreen.getInstance ());
+						pushNewGame = true;
+					}
 				}
 			}
 		};
