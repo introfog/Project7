@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 
+import com.introfog.addition.parsers.ParseBasis;
 import com.introfog.mesh.objects.GameObject;
 import com.introfog.mesh.objects.singletons.special.LevelManager;
 
@@ -20,7 +21,7 @@ public class Floor{
 	
 	
 	public Floor (){
-		Texture texture = new Texture ("core/assets/images/other/floor.png");
+		Texture texture = new Texture (ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/other/floor.png");
 		numRegions = (int) (texture.getWidth () / (GameObject.UNIT / GameObject.ASPECT_RATIO));
 		int w = texture.getWidth () / numRegions;
 		int h = texture.getHeight ();

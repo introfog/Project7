@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Pools;
 
 import com.introfog.addition.math.Rectangle;
+import com.introfog.addition.parsers.ParseBasis;
 import com.introfog.mesh.objects.singletons.special.ObjectManager;
 import com.introfog.messages.*;
 import com.introfog.render.*;
@@ -18,7 +19,7 @@ public class Wall implements GameObject{
 	
 	
 	public Wall (){
-		Texture texture = new Texture ("core/assets/images/other/wall.png");
+		Texture texture = new Texture (ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/other/wall.png");
 		dataRender = new DataRender ();
 		dataRender.sprite = new Sprite (texture);
 		dataRender.sprite.setBounds (0, 0, texture.getWidth () * ASPECT_RATIO, texture.getHeight () * ASPECT_RATIO);

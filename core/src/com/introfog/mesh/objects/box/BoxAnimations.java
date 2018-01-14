@@ -1,5 +1,6 @@
 package com.introfog.mesh.objects.box;
 
+import com.introfog.addition.parsers.ParseBasis;
 import com.introfog.mesh.animation.ObjectAnimation;
 import com.introfog.mesh.objects.GameObject;
 import com.introfog.render.DataRender;
@@ -16,7 +17,8 @@ public class BoxAnimations extends Box{
 		
 		float regionW = GameObject.UNIT / GameObject.ASPECT_RATIO;
 		float regionH = (1 + GameObject.ANGLE) * GameObject.UNIT / GameObject.ASPECT_RATIO;
-		fall = new ObjectAnimation ("core/assets/images/other/box.png", false, regionW, regionH, BOX_W, BOX_H, 0.3f);
+		String path = ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/other/box.png";
+		fall = new ObjectAnimation (path, false, regionW, regionH, BOX_W, BOX_H, 0.3f);
 		
 		dataRender = new DataRender ();
 		dataRender.sprite = fall.getFirstFrame ();

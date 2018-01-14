@@ -1,5 +1,6 @@
 package com.introfog.mesh.objects.singletons.character;
 
+import com.introfog.addition.parsers.ParseBasis;
 import com.introfog.mesh.animation.ObjectAnimation;
 import com.introfog.mesh.objects.GameObject;
 import com.introfog.render.*;
@@ -16,10 +17,10 @@ public class CharacterAnimations extends Character{
 		this.character = character;
 		String path;
 		if (character.name == CharacterName.first){
-			path = "core/assets/images/character/first/";
+			path = ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/character/first/";
 		}
 		else{
-			path = "core/assets/images/character/second/";
+			path = ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/character/second/";
 		}
 		
 		stand = new ObjectAnimation[Direction.values ().length];
