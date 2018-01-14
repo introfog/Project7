@@ -13,7 +13,7 @@ public class Character implements GameObject{
 	protected static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
 	protected static final float BODY_CHARACTER_H = CHARACTER_H / 4;
 	
-	protected CharacterName name = CharacterName.first;
+	protected CharacterName name = CharacterName.summer;
 	protected Direction currentDirection = Direction.forward;
 	protected State state = State.stand;
 	protected AnimatedObject body;
@@ -21,7 +21,8 @@ public class Character implements GameObject{
 	private ObjectType objectType;
 	private CharacterMessageParser parser;
 	private CharacterControl control;
-	private CharacterAnimations animations;
+	private CharacterAnimations animationsSummer;
+	private CharacterAnimations animationsWinter;
 	
 	
 	private Character (CharacterName name){
@@ -32,11 +33,12 @@ public class Character implements GameObject{
 		
 		parser = new CharacterMessageParser (this);
 		control = new CharacterControl (this);
-		animations = new CharacterAnimations (this);
+		animationsSummer = new CharacterAnimations (this, CharacterName.summer);
+		animationsWinter = new CharacterAnimations (this, CharacterName.winter);
 	}
 	
 	private static class CharacterHolder{
-		private final static Character first = new Character (CharacterName.first);
+		private final static Character summer = new Character (CharacterName.summer);
 	}
 	
 	
@@ -44,7 +46,7 @@ public class Character implements GameObject{
 	
 	
 	public static Character getInstance (){
-		return CharacterHolder.first;
+		return CharacterHolder.summer;
 	}
 	
 	public void setSpritePosition (float x, float y){
@@ -55,12 +57,8 @@ public class Character implements GameObject{
 	
 	@Override
 	public void update (){
-		//именно animations первое
-		
-		
 		control.update ();
 		parser.update ();
-		
 	}
 	
 	@Override
@@ -70,8 +68,14 @@ public class Character implements GameObject{
 	
 	@Override
 	public void draw (){
-		animations.update ();
-		animations.draw ();
+		if (name == CharacterName.summer){
+			animationsSummer.update ();
+			animationsSummer.draw ();
+		}
+		else{
+			animationsWinter.update ();
+			animationsWinter.draw ();
+		}
 		Camera.getInstance ().setPosition (body.getBodyX () + CHARACTER_W / 2, body.getBodyY () + CHARACTER_H / 2);
 	}
 	
@@ -80,7 +84,8 @@ public class Character implements GameObject{
 		state = State.stand;
 		currentDirection = Direction.forward;
 		
-		animations.clear ();
+		animationsSummer.clear ();
+		animationsWinter.clear ();
 	}
 	
 	@Override

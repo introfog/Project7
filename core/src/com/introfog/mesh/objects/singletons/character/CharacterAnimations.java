@@ -13,15 +13,10 @@ public class CharacterAnimations extends Character{
 	private ObjectAnimation[] walk;
 	
 	
-	public CharacterAnimations (Character character){
+	public CharacterAnimations (Character character, CharacterName name){
+		this.name = name;
 		this.character = character;
-		String path;
-		if (character.name == CharacterName.first){
-			path = ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/character/first/";
-		}
-		else{
-			path = ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/character/second/";
-		}
+		String path = ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/character/" + name.toString () + "/";
 		
 		stand = new ObjectAnimation[Direction.values ().length];
 		walk = new ObjectAnimation[Direction.values ().length];

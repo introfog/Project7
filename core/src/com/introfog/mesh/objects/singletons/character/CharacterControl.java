@@ -95,5 +95,14 @@ public class CharacterControl extends Character{
 		if (character.state == State.stand || character.state == State.move){
 			updateMoveControl ();
 		}
+		
+		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
+			if (character.name == CharacterName.summer){
+				character.name = CharacterName.winter;
+			}
+			else{
+				character.name = CharacterName.summer;
+			}
+		}
 	}
 }
