@@ -85,7 +85,7 @@ public abstract class ParseLevel extends ParseBasis{
 		switch (currObjectGroup){
 		case "wall":
 			Wall wall = Pools.obtain (Wall.class);
-			wall.setSpritePosition (x, y);
+			wall.setSpritePosition (x, y, type);
 			aom = Pools.obtain (AddObjectMessage.class);
 			aom.initialize (wall);
 			ObjectManager.getInstance ().sendMessage (aom);
