@@ -55,6 +55,31 @@ public abstract class ParseLevel extends ParseBasis{
 		levelH = (int) (LevelManager.NUM_TILE_H * tileH * ASPECT_RATIO);
 	}
 	
+	private static void parseCoordinates (XMLStreamReader xmlReader){
+		if (xmlReader.getLocalName ().compareTo ("object") == 0){
+			for (int i = 0; i < xmlReader.getAttributeCount (); i++){
+				switch (xmlReader.getAttributeName (i).toString ()){
+				case "x":
+					x = Float.parseFloat (xmlReader.getAttributeValue (i));
+					x *= ASPECT_RATIO;
+					break;
+				case "y":
+					y = Float.parseFloat (xmlReader.getAttributeValue (i));
+					break;
+				case "width":
+					w = Float.parseFloat (xmlReader.getAttributeValue (i));
+					w *= ASPECT_RATIO;
+					break;
+				case "height":
+					h = Float.parseFloat (xmlReader.getAttributeValue (i));
+					h *= ASPECT_RATIO;
+					break;
+				}
+			}
+			y = levelH - y * ASPECT_RATIO - h;
+		}
+	}
+	
 	private static void createObject (String currObjectGroup){
 		AddObjectMessage aom;
 		switch (currObjectGroup){
@@ -103,55 +128,41 @@ public abstract class ParseLevel extends ParseBasis{
 		
 		additionalCalculates (xmlReader);
 		
+		boolean setType = false;
 		String currObjectGroup = "";
 		try{
 			while (xmlReader != null && xmlReader.hasNext ()){
-				type = CharacterName.summer;
+				if (!setType){
+					type = CharacterName.summer;
+				}
 				xmlReader.next ();
 				if (xmlReader.isStartElement ()){
 					for (int  i = 0; i < xmlReader.getAttributeCount (); i++){
 						if (xmlReader.getAttributeName (i).toString ().compareTo ("name") == 0){
-							currObjectGroup = xmlReader.getAttributeValue (i);
-						}
-					}
-					if (xmlReader.getLocalName ().compareTo ("object") == 0){
-						for (int i = 0; i < xmlReader.getAttributeCount (); i++){
-							switch (xmlReader.getAttributeName (i).toString ()){
-							case "x":
-								x = Float.parseFloat (xmlReader.getAttributeValue (i));
-								x *= ASPECT_RATIO;
-								break;
-							case "y":
-								y = Float.parseFloat (xmlReader.getAttributeValue (i));
-								break;
-							case "width":
-								w = Float.parseFloat (xmlReader.getAttributeValue (i));
-								w *= ASPECT_RATIO;
-								break;
-							case "height":
-								h = Float.parseFloat (xmlReader.getAttributeValue (i));
-								h *= ASPECT_RATIO;
-								break;
+							if (xmlReader.getAttributeValue (i).compareTo ("type") != 0){
+								currObjectGroup = xmlReader.getAttributeValue (i);
 							}
 						}
-						y = levelH - y * ASPECT_RATIO - h;
 					}
+					parseCoordinates (xmlReader);
 					if (xmlReader.getLocalName ().compareTo ("property") == 0){
 						for (int i = 0; i < xmlReader.getAttributeCount (); i++){
 							if (xmlReader.getAttributeName (i).toString ().compareTo ("value") == 0){
 								if (xmlReader.getAttributeValue (i).compareTo ("winter") == 0){
 									type = CharacterName.winter;
+									setType = true;
 								}
 								else{
 									type = CharacterName.summer;
+									setType = true;
 								}
 							}
 						}
-						y = levelH - y * ASPECT_RATIO - h;
 					}
 				}
 				if (xmlReader.isEndElement () && xmlReader.getLocalName ().compareTo ("object") == 0){
 					createObject (currObjectGroup);
+					setType = false;
 				}
 			}
 		}
