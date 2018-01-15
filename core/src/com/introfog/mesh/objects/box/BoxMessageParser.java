@@ -24,9 +24,10 @@ public class BoxMessageParser extends Box{
 				box.body.move (msg.deltaX, msg.deltaY);
 				
 				if (msg.objectType == ObjectType.character && msg.object.getNatureType () != box.natureType){
-					PlayerLostMessage plm = Pools.obtain (PlayerLostMessage.class);
-					plm.initialize (box);
-					ObjectManager.getInstance ().addMessage (plm);
+					DestroyObjectMessage dom = Pools.obtain (DestroyObjectMessage.class);
+					dom.initialize (msg.object, box);
+					ObjectManager.getInstance ().addMessage (dom);
+					return true;
 				}
 			}
 		}

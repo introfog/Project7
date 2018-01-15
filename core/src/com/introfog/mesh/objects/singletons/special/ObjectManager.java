@@ -80,6 +80,12 @@ public class ObjectManager implements GameObject{
 				return new PlayerLostMessage ();
 			}
 		});
+		Pools.set (DestroyObjectMessage.class, new Pool <DestroyObjectMessage> (1, 2){
+			@Override
+			protected DestroyObjectMessage newObject (){
+				return new DestroyObjectMessage ();
+			}
+		});
 	}
 	
 	
