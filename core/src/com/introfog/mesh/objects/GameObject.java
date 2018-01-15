@@ -1,5 +1,6 @@
 package com.introfog.mesh.objects;
 
+import com.introfog.mesh.objects.singletons.character.NatureType;
 import com.introfog.messages.GameMessage;
 
 import static com.introfog.GameSystem.SCREEN_H;
@@ -17,5 +18,8 @@ public interface GameObject{
 	default void clear (){ }
 	default ObjectType getObjectType (){
 		return ObjectType.unknown;
+	}
+	default NatureType getNatureType (){
+		return NatureType.summer;
 	}
 }

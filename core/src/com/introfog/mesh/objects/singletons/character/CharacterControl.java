@@ -97,11 +97,11 @@ public class CharacterControl extends Character{
 		}
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
-			if (character.name == CharacterName.summer){
-				character.name = CharacterName.winter;
+			if (character.natureType == NatureType.summer){
+				character.natureType = NatureType.winter;
 			}
 			else{
-				character.name = CharacterName.summer;
+				character.natureType = NatureType.summer;
 			}
 		}
 	}

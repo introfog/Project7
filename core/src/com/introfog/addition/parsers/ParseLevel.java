@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Pools;
 import com.introfog.mesh.objects.*;
 import com.introfog.mesh.objects.box.Box;
 import com.introfog.mesh.objects.singletons.character.Character;
-import com.introfog.mesh.objects.singletons.character.CharacterName;
+import com.introfog.mesh.objects.singletons.character.NatureType;
 import com.introfog.mesh.objects.singletons.special.*;
 import com.introfog.messages.AddObjectMessage;
 
@@ -19,7 +19,7 @@ public abstract class ParseLevel extends ParseBasis{
 	private static float w;
 	private static float h;
 	private static int levelH; //высота уровня умноженная на аспект ратио
-	private static CharacterName type;
+	private static NatureType type;
 	
 	
 	private static void additionalCalculates (XMLStreamReader xmlReader){
@@ -133,7 +133,7 @@ public abstract class ParseLevel extends ParseBasis{
 		try{
 			while (xmlReader != null && xmlReader.hasNext ()){
 				if (!setType){
-					type = CharacterName.summer;
+					type = NatureType.summer;
 				}
 				xmlReader.next ();
 				if (xmlReader.isStartElement ()){
@@ -149,11 +149,11 @@ public abstract class ParseLevel extends ParseBasis{
 						for (int i = 0; i < xmlReader.getAttributeCount (); i++){
 							if (xmlReader.getAttributeName (i).toString ().compareTo ("value") == 0){
 								if (xmlReader.getAttributeValue (i).compareTo ("winter") == 0){
-									type = CharacterName.winter;
+									type = NatureType.winter;
 									setType = true;
 								}
 								else{
-									type = CharacterName.summer;
+									type = NatureType.summer;
 									setType = true;
 								}
 							}

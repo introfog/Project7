@@ -13,7 +13,7 @@ public class Character implements GameObject{
 	protected static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
 	protected static final float BODY_CHARACTER_H = CHARACTER_H / 4;
 	
-	protected CharacterName name = CharacterName.summer;
+	protected NatureType natureType = NatureType.summer;
 	protected Direction currentDirection = Direction.forward;
 	protected State state = State.stand;
 	protected AnimatedObject body;
@@ -25,20 +25,20 @@ public class Character implements GameObject{
 	private CharacterAnimations animationsWinter;
 	
 	
-	private Character (CharacterName name){
+	private Character (NatureType natureType){
 		objectType = ObjectType.character;
-		this.name = name;
+		this.natureType = natureType;
 		
 		body = new AnimatedObject (0, 0, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
 		
 		parser = new CharacterMessageParser (this);
 		control = new CharacterControl (this);
-		animationsSummer = new CharacterAnimations (this, CharacterName.summer);
-		animationsWinter = new CharacterAnimations (this, CharacterName.winter);
+		animationsSummer = new CharacterAnimations (this, NatureType.summer);
+		animationsWinter = new CharacterAnimations (this, NatureType.winter);
 	}
 	
 	private static class CharacterHolder{
-		private final static Character summer = new Character (CharacterName.summer);
+		private final static Character summer = new Character (NatureType.summer);
 	}
 	
 	
@@ -68,7 +68,7 @@ public class Character implements GameObject{
 	
 	@Override
 	public void draw (){
-		if (name == CharacterName.summer){
+		if (natureType == NatureType.summer){
 			animationsSummer.update ();
 			animationsSummer.draw ();
 		}
@@ -91,5 +91,10 @@ public class Character implements GameObject{
 	@Override
 	public ObjectType getObjectType (){
 		return objectType;
+	}
+	
+	@Override
+	public NatureType getNatureType (){
+		return natureType;
 	}
 }

@@ -74,6 +74,12 @@ public class ObjectManager implements GameObject{
 				return new PushOutMessage ();
 			}
 		});
+		Pools.set (PlayerLostMessage.class, new Pool <PlayerLostMessage> (1, 2){
+			@Override
+			protected PlayerLostMessage newObject (){
+				return new PlayerLostMessage ();
+			}
+		});
 	}
 	
 	

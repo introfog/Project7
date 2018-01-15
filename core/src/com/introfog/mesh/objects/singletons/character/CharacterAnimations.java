@@ -13,10 +13,10 @@ public class CharacterAnimations extends Character{
 	private ObjectAnimation[] walk;
 	
 	
-	public CharacterAnimations (Character character, CharacterName name){
-		this.name = name;
+	public CharacterAnimations (Character character, NatureType natureType){
+		this.natureType = natureType;
 		this.character = character;
-		String path = ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/character/" + name.toString () + "/";
+		String path = ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/character/" + natureType.toString () + "/";
 		
 		stand = new ObjectAnimation[Direction.values ().length];
 		walk = new ObjectAnimation[Direction.values ().length];
@@ -24,7 +24,7 @@ public class CharacterAnimations extends Character{
 		float region = GameObject.UNIT / GameObject.ASPECT_RATIO;
 		for (int i = 0; i < Direction.values ().length; i++){
 			stand[i] = new ObjectAnimation (path + "stand/stand_" + Direction.values ()[i] + ".png", region,
-					region, CHARACTER_W, CHARACTER_H, 0.35f);
+					region, CHARACTER_W, CHARACTER_H, 0.2f);
 			walk[i] = new ObjectAnimation (path + "walk/walk_" + Direction.values ()[i] + ".png", region,
 					region, CHARACTER_W, CHARACTER_H, 0.15f);
 		}

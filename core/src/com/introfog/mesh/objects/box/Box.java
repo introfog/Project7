@@ -6,7 +6,7 @@ import com.introfog.mesh.body.AnimatedObject;
 import com.introfog.mesh.objects.GameObject;
 import com.introfog.mesh.objects.ObjectType;
 import com.introfog.mesh.objects.State;
-import com.introfog.mesh.objects.singletons.character.CharacterName;
+import com.introfog.mesh.objects.singletons.character.NatureType;
 import com.introfog.messages.*;
 
 public class Box implements GameObject{
@@ -15,7 +15,7 @@ public class Box implements GameObject{
 	protected static final float BOX_W = UNIT;
 	protected static final float BOX_H = UNIT + UNIT * ANGLE;
 	
-	protected CharacterName type = CharacterName.summer;
+	protected NatureType natureType = NatureType.summer;
 	protected State state = State.stand;
 	protected AnimatedObject body;
 	
@@ -34,8 +34,8 @@ public class Box implements GameObject{
 		animations = new BoxAnimations (this);
 	}
 	
-	public void setSpritePosition (float x, float y, CharacterName type){
-		this.type = type;
+	public void setSpritePosition (float x, float y, NatureType natureType){
+		this.natureType = natureType;
 		body.setSpritePosition (x, y);
 		body.move (0, 0.5f);
 	}
@@ -64,5 +64,10 @@ public class Box implements GameObject{
 	@Override
 	public ObjectType getObjectType (){
 		return objectType;
+	}
+	
+	@Override
+	public NatureType getNatureType (){
+		return natureType;
 	}
 }

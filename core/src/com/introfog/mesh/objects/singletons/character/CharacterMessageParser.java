@@ -19,6 +19,11 @@ public class CharacterMessageParser extends Character{
 			PushOutMessage msg = (PushOutMessage) message;
 			if (character.body.intersects (msg.undo.oldBodyX - msg.undo.deltaX, msg.undo.oldBodyY - msg.undo.deltaY,
 										   msg.undo.bodyW, msg.undo.bodyH)){
+				if (msg.undo.object.getNatureType () != character.natureType){
+					PlayerLostMessage plm = Pools.obtain (PlayerLostMessage.class);
+					plm.initialize (character);
+					ObjectManager.getInstance ().addMessage (plm);
+				}
 				if ((msg.undo.deltaX != 0 && !pushX) || (msg.undo.deltaY != 0 && !pushY)){
 					character.body.move (-msg.undo.deltaX, -msg.undo.deltaY);
 					pushX = (msg.undo.deltaX != 0);

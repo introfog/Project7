@@ -3,7 +3,7 @@ package com.introfog.mesh.objects.box;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.introfog.addition.parsers.ParseBasis;
-import com.introfog.mesh.objects.singletons.character.CharacterName;
+import com.introfog.mesh.objects.singletons.character.NatureType;
 import com.introfog.render.DataRender;
 import com.introfog.render.Render;
 
@@ -33,10 +33,10 @@ public class BoxAnimations extends Box{
 	
 	@Override
 	public void update (){
-		if (box.type == CharacterName.summer){
+		if (box.natureType == NatureType.summer){
 			dataRender.sprite = spriteSummer;
 		}
-		else if (box.type == CharacterName.winter){
+		else if (box.natureType == NatureType.winter){
 			dataRender.sprite = spriteWinter;
 		}
 		dataRender.sprite.setPosition (box.body.getSpriteX (), box.body.getSpriteY ());

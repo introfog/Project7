@@ -2,6 +2,7 @@ package com.introfog.mesh.objects.box;
 
 import com.badlogic.gdx.utils.Pools;
 
+import com.introfog.mesh.objects.ObjectType;
 import com.introfog.mesh.objects.singletons.special.ObjectManager;
 import com.introfog.messages.*;
 
@@ -21,8 +22,13 @@ public class BoxMessageParser extends Box{
 							   BODY_BOX_W, BODY_BOX_H);
 				ObjectManager.getInstance ().addMessage (mm);
 				box.body.move (msg.deltaX, msg.deltaY);
+				
+				if (msg.objectType == ObjectType.character && msg.object.getNatureType () != box.natureType){
+					PlayerLostMessage plm = Pools.obtain (PlayerLostMessage.class);
+					plm.initialize (box);
+					ObjectManager.getInstance ().addMessage (plm);
+				}
 			}
-			//return true;
 		}
 		else if (message.type == MessageType.pushOut){
 			PushOutMessage pushOutMessage = (PushOutMessage) message;
