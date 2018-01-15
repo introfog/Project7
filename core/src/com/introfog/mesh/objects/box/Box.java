@@ -6,6 +6,7 @@ import com.introfog.mesh.body.AnimatedObject;
 import com.introfog.mesh.objects.GameObject;
 import com.introfog.mesh.objects.ObjectType;
 import com.introfog.mesh.objects.State;
+import com.introfog.mesh.objects.singletons.character.CharacterName;
 import com.introfog.messages.*;
 
 public class Box implements GameObject{
@@ -14,10 +15,11 @@ public class Box implements GameObject{
 	protected static final float BOX_W = UNIT;
 	protected static final float BOX_H = UNIT + UNIT * ANGLE;
 	
+	protected CharacterName type = CharacterName.summer;
 	protected State state = State.stand;
+	protected AnimatedObject body;
 	
 	private ObjectType objectType;
-	protected AnimatedObject body;
 	private BoxMessageParser parser;
 	private BoxAnimations animations;
 	
@@ -32,7 +34,8 @@ public class Box implements GameObject{
 		animations = new BoxAnimations (this);
 	}
 	
-	public void setSpritePosition (float x, float y){
+	public void setSpritePosition (float x, float y, CharacterName type){
+		this.type = type;
 		body.setSpritePosition (x, y);
 		body.move (0, 0.5f);
 	}

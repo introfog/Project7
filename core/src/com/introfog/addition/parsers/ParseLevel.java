@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Pools;
 import com.introfog.mesh.objects.*;
 import com.introfog.mesh.objects.box.Box;
 import com.introfog.mesh.objects.singletons.character.Character;
+import com.introfog.mesh.objects.singletons.character.CharacterName;
 import com.introfog.mesh.objects.singletons.special.*;
 import com.introfog.messages.AddObjectMessage;
 
@@ -18,6 +19,7 @@ public abstract class ParseLevel extends ParseBasis{
 	private static float w;
 	private static float h;
 	private static int levelH; //высота уровня умноженная на аспект ратио
+	private static CharacterName type;
 	
 	
 	private static void additionalCalculates (XMLStreamReader xmlReader){
@@ -87,7 +89,7 @@ public abstract class ParseLevel extends ParseBasis{
 			break;
 		case "box":
 			Box box = Pools.obtain (Box.class);
-			box.setSpritePosition (x, y);
+			box.setSpritePosition (x, y, type);
 			aom = Pools.obtain (AddObjectMessage.class);
 			aom.initialize (box);
 			ObjectManager.getInstance ().sendMessage (aom);
@@ -104,12 +106,15 @@ public abstract class ParseLevel extends ParseBasis{
 		String currObjectGroup = "";
 		try{
 			while (xmlReader != null && xmlReader.hasNext ()){
+				type = CharacterName.summer;
 				xmlReader.next ();
 				if (xmlReader.isStartElement ()){
-					if (xmlReader.getAttributeName (0).toString ().compareTo ("name") == 0){
-						currObjectGroup = xmlReader.getAttributeValue (0);
+					for (int  i = 0; i < xmlReader.getAttributeCount (); i++){
+						if (xmlReader.getAttributeName (i).toString ().compareTo ("name") == 0){
+							currObjectGroup = xmlReader.getAttributeValue (i);
+						}
 					}
-					else if (xmlReader.getLocalName ().compareTo ("object") == 0){
+					if (xmlReader.getLocalName ().compareTo ("object") == 0){
 						for (int i = 0; i < xmlReader.getAttributeCount (); i++){
 							switch (xmlReader.getAttributeName (i).toString ()){
 							case "x":
@@ -118,7 +123,6 @@ public abstract class ParseLevel extends ParseBasis{
 								break;
 							case "y":
 								y = Float.parseFloat (xmlReader.getAttributeValue (i));
-								
 								break;
 							case "width":
 								w = Float.parseFloat (xmlReader.getAttributeValue (i));
@@ -131,8 +135,23 @@ public abstract class ParseLevel extends ParseBasis{
 							}
 						}
 						y = levelH - y * ASPECT_RATIO - h;
-						createObject (currObjectGroup);
 					}
+					if (xmlReader.getLocalName ().compareTo ("property") == 0){
+						for (int i = 0; i < xmlReader.getAttributeCount (); i++){
+							if (xmlReader.getAttributeName (i).toString ().compareTo ("value") == 0){
+								if (xmlReader.getAttributeValue (i).compareTo ("winter") == 0){
+									type = CharacterName.winter;
+								}
+								else{
+									type = CharacterName.summer;
+								}
+							}
+						}
+						y = levelH - y * ASPECT_RATIO - h;
+					}
+				}
+				if (xmlReader.isEndElement () && xmlReader.getLocalName ().compareTo ("object") == 0){
+					createObject (currObjectGroup);
 				}
 			}
 		}
