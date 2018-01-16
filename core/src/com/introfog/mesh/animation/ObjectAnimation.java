@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.introfog.addition.parsers.ParseBasis;
+import com.introfog.screens.ShowError;
 
 public class ObjectAnimation{
 	private boolean looping = true; //зацикливащаяся анимация или нет
@@ -18,17 +20,24 @@ public class ObjectAnimation{
 		//frameDuration - время между кадрами
 		this.frameW = frameW;
 		this.frameH = frameH;
-		Texture texture = new Texture (fileName);
-		int frameCols = (int) Math.ceil (texture.getWidth () / regionW);
-		int frameRows = (int) Math.ceil (texture.getHeight () / regionH);
-		TextureRegion[][] tmp = TextureRegion.split (texture, (int) regionW, (int) regionH);
-		TextureRegion[] frames = new TextureRegion[frameCols * frameRows];
-		for (int i = 0, index = 0; i < frameRows; i++){
-			for (int j = 0; j < frameCols; j++){
-				frames[index++] = tmp[i][j];
+		try{
+			Texture texture = new Texture (fileName);
+			int frameCols = (int) Math.ceil (texture.getWidth () / regionW);
+			int frameRows = (int) Math.ceil (texture.getHeight () / regionH);
+			TextureRegion[][] tmp = TextureRegion.split (texture, (int) regionW, (int) regionH);
+			TextureRegion[] frames = new TextureRegion[frameCols * frameRows];
+			for (int i = 0, index = 0; i < frameRows; i++){
+				for (int j = 0; j < frameCols; j++){
+					frames[index++] = tmp[i][j];
+				}
 			}
+			animation = new Animation <> (frameDuration, frames);
 		}
-		animation = new Animation <> (frameDuration, frames);
+		catch (RuntimeException ex){
+			int length = ParseBasis.ABSOLUTE_PATH_TO_PROJECT.length ();
+			ShowError.getInstance ().initialize ("проблема с созданием анимации",
+												 "дело в " + fileName.substring (length));
+		}
 	}
 	
 	public ObjectAnimation (String fileName, boolean looping, float regionW, float regionH, float frameW, float frameH, float frameDuration){
