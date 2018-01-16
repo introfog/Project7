@@ -1,6 +1,7 @@
 package com.introfog.addition.parsers;
 
 import com.introfog.GameSystem;
+import com.introfog.screens.ShowError;
 
 import javax.xml.stream.*;
 
@@ -40,8 +41,14 @@ public abstract class ParseBasis{
 			xmlReader = XMLInputFactory.newInstance ().createXMLStreamReader (tmpS, new FileInputStream (tmpS));
 			return xmlReader;
 		}
-		catch (IOException | XMLStreamException ex){
-			ex.printStackTrace (System.out);
+		catch (XMLStreamException ex){
+			ShowError.getInstance ().initialize ("проблема с созданием " + path,
+												 "был сгенерирован XMLStreamException.");
+			return null;
+		}
+		catch (IOException ex){
+			ShowError.getInstance ().initialize ("проблема с созданием " + path,
+												 "был сгенерирован IOException при создании потока ввода.");
 			return null;
 		}
 	}

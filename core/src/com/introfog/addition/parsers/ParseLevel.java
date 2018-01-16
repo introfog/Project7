@@ -8,6 +8,7 @@ import com.introfog.mesh.objects.singletons.character.Character;
 import com.introfog.mesh.objects.singletons.character.NatureType;
 import com.introfog.mesh.objects.singletons.special.*;
 import com.introfog.messages.AddObjectMessage;
+import com.introfog.screens.ShowError;
 
 import javax.xml.stream.*;
 
@@ -22,34 +23,30 @@ public abstract class ParseLevel extends ParseBasis{
 	private static NatureType type;
 	
 	
-	private static void additionalCalculates (XMLStreamReader xmlReader){
+	private static void additionalCalculates (XMLStreamReader xmlReader) throws XMLStreamException, NumberFormatException{
 		//int tileW;
 		int tileH = 0;
-		try{
-			if (xmlReader.hasNext ()){
-				xmlReader.next ();
-				if (xmlReader.isStartElement () && xmlReader.getLocalName ().compareTo ("map") == 0){
-					for (int i = 0; i < xmlReader.getAttributeCount (); i++){
-						switch (xmlReader.getAttributeName (i).toString ()){
-						case "width":
-							LevelManager.NUM_TILE_W = Integer.parseInt (xmlReader.getAttributeValue (i));
-							break;
-						case "height":
-							LevelManager.NUM_TILE_H = Integer.parseInt (xmlReader.getAttributeValue (i));
-							break;
+		
+		if (xmlReader != null && xmlReader.hasNext ()){
+			xmlReader.next ();
+			if (xmlReader.isStartElement () && xmlReader.getLocalName ().compareTo ("map") == 0){
+				for (int i = 0; i < xmlReader.getAttributeCount (); i++){
+					switch (xmlReader.getAttributeName (i).toString ()){
+					case "width":
+						LevelManager.NUM_TILE_W = Integer.parseInt (xmlReader.getAttributeValue (i));
+						break;
+					case "height":
+						LevelManager.NUM_TILE_H = Integer.parseInt (xmlReader.getAttributeValue (i));
+						break;
 						/*case "tilewidth":
 							tileW = Integer.parseInt (xmlReader.getAttributeValue (i));
 							break;*/
-						case "tileheight":
-							tileH = Integer.parseInt (xmlReader.getAttributeValue (i));
-							break;
-						}
+					case "tileheight":
+						tileH = Integer.parseInt (xmlReader.getAttributeValue (i));
+						break;
 					}
 				}
 			}
-		}
-		catch (XMLStreamException | NumberFormatException | NullPointerException ex){
-			ex.printStackTrace (System.out);
 		}
 		
 		levelH = (int) (LevelManager.NUM_TILE_H * tileH * ASPECT_RATIO);
@@ -126,18 +123,19 @@ public abstract class ParseLevel extends ParseBasis{
 	public static void parseLVL (int level){
 		XMLStreamReader xmlReader = getXML ("resource/xml/levels/lvl" + String.valueOf (level) + ".tmx");
 		
-		additionalCalculates (xmlReader);
-		
-		boolean setType = false;
-		String currObjectGroup = "";
 		try{
+			additionalCalculates (xmlReader);
+			
+			boolean setType = false;
+			String currObjectGroup = "";
+			
 			while (xmlReader != null && xmlReader.hasNext ()){
 				if (!setType){
 					type = NatureType.summer;
 				}
 				xmlReader.next ();
 				if (xmlReader.isStartElement ()){
-					for (int  i = 0; i < xmlReader.getAttributeCount (); i++){
+					for (int i = 0; i < xmlReader.getAttributeCount (); i++){
 						if (xmlReader.getAttributeName (i).toString ().compareTo ("name") == 0){
 							if (xmlReader.getAttributeValue (i).compareTo ("type") != 0){
 								currObjectGroup = xmlReader.getAttributeValue (i);
@@ -167,7 +165,12 @@ public abstract class ParseLevel extends ParseBasis{
 			}
 		}
 		catch (XMLStreamException ex){
-			ex.printStackTrace (System.out);
+			ShowError.getInstance ().initialize ("проблема с созданием уровня под номером - " + level,
+												 "был сгенерирован XMLStreamException.");
+		}
+		catch (NumberFormatException ex){
+			ShowError.getInstance ().initialize ("проблема с созданием уровня под номером - " + level,
+												 "неверный формат данных.");
 		}
 	}
 }

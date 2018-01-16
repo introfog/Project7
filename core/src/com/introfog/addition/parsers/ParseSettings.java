@@ -1,15 +1,19 @@
 package com.introfog.addition.parsers;
 
 import com.introfog.*;
+import com.introfog.screens.ShowError;
 
 import javax.xml.stream.*;
 
 import java.io.*;
 
 public class ParseSettings extends ParseBasis{
+	private static final String path = "resource/xml/settings.xml";
+	
+	
 	public static void parseSettings (){
 		try{
-			XMLStreamReader xmlReader = getXML ("resource/xml/settings.xml");
+			XMLStreamReader xmlReader = getXML (path);
 			String name = "";
 			while (xmlReader != null && xmlReader.hasNext ()){
 				xmlReader.next ();
@@ -38,15 +42,21 @@ public class ParseSettings extends ParseBasis{
 				}
 			}
 		}
-		catch (XMLStreamException | NumberFormatException | NullPointerException ex){
-			ex.printStackTrace (System.out);
+		catch (XMLStreamException ex){
+			ShowError.getInstance ().initialize ("проблема с чтением " + path,
+												 "был сгенерирован XMLStreamException.");
+		}
+		catch (NumberFormatException ex){
+			ShowError.getInstance ().initialize ("проблема с чтением " + path,
+												 "неверный формат данных в файле.");
 		}
 	}
 	
 	public static void writeSettings (){
 		try{
 			XMLOutputFactory output = XMLOutputFactory.newInstance ();
-			XMLStreamWriter xmlWriter = output.createXMLStreamWriter (new FileOutputStream (ABSOLUTE_PATH_TO_PROJECT + "resource/xml/settings.xml"));
+			XMLStreamWriter xmlWriter = output.createXMLStreamWriter (
+					new FileOutputStream (ABSOLUTE_PATH_TO_PROJECT + path));
 			
 			// Открываем XML-документ и Пишем корневой элемент BookCatalogue
 			xmlWriter.writeStartDocument ("1.0");
@@ -85,8 +95,13 @@ public class ParseSettings extends ParseBasis{
 			xmlWriter.writeEndDocument ();
 			xmlWriter.flush ();
 		}
-		catch (XMLStreamException | IOException ex){
-			ex.printStackTrace ();
+		catch (XMLStreamException ex){
+			ShowError.getInstance ().initialize ("проблема с записью в " + path,
+												 "был сгенерирован XMLStreamException.");
+		}
+		catch (IOException ex){
+			ShowError.getInstance ().initialize ("проблема с записью в " + path,
+												 "был сгенерирован IOException при открытии потока вывода.");
 		}
 	}
 }
