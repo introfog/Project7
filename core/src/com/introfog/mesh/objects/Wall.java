@@ -2,7 +2,7 @@ package com.introfog.mesh.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.utils.Pools;
+import com.badlogic.gdx.utils.*;
 
 import com.introfog.addition.math.Rectangle;
 import com.introfog.addition.parsers.ParseBasis;
@@ -23,17 +23,25 @@ public class Wall implements GameObject{
 	
 	public Wall (){
 		natureType = NatureType.summer;
-		Texture texture = new Texture (ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/other/wall.png");
-		dataRender = new DataRender ();
-		dataRender.sprite = new Sprite (texture);
-		dataRender.sprite.setBounds (0, 0, texture.getWidth () * ASPECT_RATIO, texture.getHeight () * ASPECT_RATIO);
-		body = new Rectangle (0, 0, BODY_WALL_W, BODY_WALL_H);
+		try{
+			Texture texture = new Texture (ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/other/wall.png");
+			dataRender = new DataRender ();
+			dataRender.sprite = new Sprite (texture);
+			dataRender.sprite.setBounds (0, 0, texture.getWidth () * ASPECT_RATIO, texture.getHeight () * ASPECT_RATIO);
+			body = new Rectangle (0, 0, BODY_WALL_W, BODY_WALL_H);
+		}
+		catch (RuntimeException ex){
+			ShowError.getInstance ().initialize ("проблема с созданием объекта Wall",
+												 "дело в resource/images/other/wall.png");
+		}
 	}
 	
 	public void setSpritePosition (float x, float y, NatureType natureType){
 		this.natureType = natureType;
-		dataRender.sprite.setPosition (x, y);
-		body.setPosition (x + (dataRender.sprite.getWidth () - body.getW ()) / 2, y);
+		if (dataRender != null){
+			dataRender.sprite.setPosition (x, y);
+			body.setPosition (x + (dataRender.sprite.getWidth () - body.getW ()) / 2, y);
+		}
 	}
 	
 	@Override

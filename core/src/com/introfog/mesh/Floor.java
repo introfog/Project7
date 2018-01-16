@@ -10,6 +10,7 @@ import com.introfog.addition.parsers.ParseBasis;
 import com.introfog.mesh.objects.GameObject;
 import com.introfog.mesh.objects.singletons.special.LevelManager;
 
+import com.introfog.screens.ShowError;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -21,40 +22,49 @@ public class Floor{
 	
 	
 	public Floor (){
-		Texture texture = new Texture (ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/other/floor.png");
-		numRegions = (int) (texture.getWidth () / (GameObject.UNIT / GameObject.ASPECT_RATIO));
-		int w = texture.getWidth () / numRegions;
-		int h = texture.getHeight ();
-		TextureRegion[] regions = new TextureRegion[numRegions];
-		
-		for (int i = 0; i < numRegions; i++){
-			regions[i] = new TextureRegion (texture, i * w, 0, w, h);
-		}
-		
-		floor = new ArrayList <> (numRegions);
-		for (int i = 0; i < numRegions; i++){
-			Sprite sprite = new Sprite (regions[i]);
-			sprite.setSize (w * GameObject.ASPECT_RATIO + 1, h * GameObject.ASPECT_RATIO + 1);
-			floor.add (sprite);
-		}
-		
-		coordinates = new ArrayList <> ();
-		int sprite;
-		for (int i = 0; i < LevelManager.NUM_TILE_W; i++){
-			for (int j = 0; j < LevelManager.NUM_TILE_H; j++){
-				sprite = MathUtils.random (0, numRegions - 1);
-				coordinates.add (new Pair <> (new Pair <>(i, j), sprite));
+		try{
+			Texture texture = new Texture (ParseBasis.ABSOLUTE_PATH_TO_PROJECT + "resource/images/other/floor.png");
+			numRegions = (int) (texture.getWidth () / (GameObject.UNIT / GameObject.ASPECT_RATIO));
+			int w = texture.getWidth () / numRegions;
+			int h = texture.getHeight ();
+			TextureRegion[] regions = new TextureRegion[numRegions];
+			
+			
+			for (int i = 0; i < numRegions; i++){
+				regions[i] = new TextureRegion (texture, i * w, 0, w, h);
 			}
+			
+			floor = new ArrayList <> (numRegions);
+			for (int i = 0; i < numRegions; i++){
+				Sprite sprite = new Sprite (regions[i]);
+				sprite.setSize (w * GameObject.ASPECT_RATIO + 1, h * GameObject.ASPECT_RATIO + 1);
+				floor.add (sprite);
+			}
+			
+			coordinates = new ArrayList <> ();
+			int sprite;
+			for (int i = 0; i < LevelManager.NUM_TILE_W; i++){
+				for (int j = 0; j < LevelManager.NUM_TILE_H; j++){
+					sprite = MathUtils.random (0, numRegions - 1);
+					coordinates.add (new Pair <> (new Pair <> (i, j), sprite));
+				}
+			}
+		}
+		catch (RuntimeException ex){
+			ShowError.getInstance ().initialize ("проблема с созданием объекта Floor",
+												 "дело в resource/images/other/floor.png");
 		}
 	}
 	
 	public void updateSize (){
-		coordinates = new ArrayList <> ();
-		int sprite;
-		for (int i = 0; i < LevelManager.NUM_TILE_W; i++){
-			for (int j = 0; j < LevelManager.NUM_TILE_H; j++){
-				sprite = MathUtils.random (0, numRegions - 1);
-				coordinates.add (new Pair <> (new Pair <>(i, j), sprite));
+		if (numRegions != 0){
+			coordinates = new ArrayList <> ();
+			int sprite;
+			for (int i = 0; i < LevelManager.NUM_TILE_W; i++){
+				for (int j = 0; j < LevelManager.NUM_TILE_H; j++){
+					sprite = MathUtils.random (0, numRegions - 1);
+					coordinates.add (new Pair <> (new Pair <> (i, j), sprite));
+				}
 			}
 		}
 	}
