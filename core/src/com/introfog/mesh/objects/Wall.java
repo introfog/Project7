@@ -10,6 +10,7 @@ import com.introfog.mesh.objects.singletons.character.NatureType;
 import com.introfog.mesh.objects.singletons.special.ObjectManager;
 import com.introfog.messages.*;
 import com.introfog.render.*;
+import com.introfog.screens.ShowError;
 
 public class Wall implements GameObject{
 	private static final float BODY_WALL_W = UNIT;
