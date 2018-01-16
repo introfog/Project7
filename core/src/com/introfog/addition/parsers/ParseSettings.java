@@ -14,8 +14,14 @@ public class ParseSettings extends ParseBasis{
 	public static void parseSettings (){
 		try{
 			XMLStreamReader xmlReader = getXML (path);
+			if (xmlReader == null){
+				ShowError.getInstance ().initialize ("проблема с чтением " + path,
+													 "файл не был найден.");
+				return;
+			}
+			
 			String name = "";
-			while (xmlReader != null && xmlReader.hasNext ()){
+			while (xmlReader.hasNext ()){
 				xmlReader.next ();
 				if (xmlReader.isStartElement () && xmlReader.getLocalName ().compareTo ("field") == 0){
 					name = xmlReader.getAttributeValue (0);
