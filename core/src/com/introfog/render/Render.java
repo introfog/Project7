@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.introfog.mesh.Floor;
+import com.introfog.mesh.objects.GameObject;
 import com.introfog.mesh.objects.singletons.Camera;
+import com.introfog.mesh.objects.singletons.character.Character;
 
 import java.util.LinkedList;
 
@@ -18,6 +20,8 @@ public class Render{
 	
 	
 	private void sortedScene (){
+		renderList.forEach ((tmp) -> tmp.useAlphaModulation = false);
+		
 		renderList.sort ((tmp1, tmp2) -> {
 			if (tmp1.layerType == LayerType.over || tmp2.layerType == LayerType.below){
 				return 1;
@@ -27,6 +31,16 @@ public class Render{
 			}
 			
 			return (int) (tmp2.sprite.getY () - tmp1.sprite.getY ());
+		});
+		
+		renderList.forEach ((tmp) -> {
+			if (Character.getInstance ().getTopSpriteY () - GameObject.UNIT < tmp.sprite.getY () &&
+					tmp.sprite.getY () < Character.getInstance ().getTopSpriteY ()){
+				if (tmp.sprite.getX () + tmp.sprite.getWidth () / 2 < Character.getInstance ().getCenterSpriteX () + GameObject.UNIT&&
+						Character.getInstance ().getCenterSpriteX () - GameObject.UNIT < tmp.sprite.getX () + tmp.sprite.getWidth () / 2){
+					tmp.useAlphaModulation = true;
+				}
+			}
 		});
 	}
 	
@@ -57,7 +71,12 @@ public class Render{
 		batch.begin ();
 		floor.draw (batch);
 		for (DataRender data : renderList){
-			data.sprite.draw (batch);
+			if (data.useAlphaModulation){
+				data.sprite.draw (batch, DataRender.ALPHA_MODULATION);
+			}
+			else{
+				data.sprite.draw (batch);
+			}
 		}
 		batch.end ();
 		

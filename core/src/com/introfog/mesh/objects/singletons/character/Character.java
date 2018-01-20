@@ -55,6 +55,14 @@ public class Character implements GameObject{
 		Camera.getInstance ().setPosition (x + CHARACTER_W / 2, y + CHARACTER_H / 2);
 	}
 	
+	public float getTopSpriteY (){
+		return body.getSpriteY () - GameObject.UNIT / 2;
+	}
+	
+	public float getCenterSpriteX (){
+		return body.getSpriteX () + GameObject.UNIT / 2;
+	}
+	
 	@Override
 	public void update (){
 		control.update ();
