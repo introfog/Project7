@@ -73,11 +73,7 @@
   <object id="119" x="256" y="912" width="64" height="48"/>
   <object id="121" x="448" y="912" width="64" height="48"/>
   <object id="122" x="512" y="912" width="64" height="48"/>
-  <object id="123" x="640" y="864" width="64" height="48">
-   <properties>
-    <property name="type" value="winter"/>
-   </properties>
-  </object>
+  <object id="123" x="640" y="864" width="64" height="48"/>
   <object id="124" x="704" y="864" width="64" height="48"/>
   <object id="125" x="768" y="864" width="64" height="48"/>
   <object id="126" x="960" y="816" width="64" height="48"/>
@@ -94,11 +90,7 @@
   <object id="155" x="320" y="816" width="64" height="48"/>
   <object id="156" x="384" y="816" width="64" height="48"/>
   <object id="157" x="448" y="816" width="64" height="48"/>
-  <object id="158" x="384" y="912" width="64" height="48">
-   <properties>
-    <property name="type" value="winter"/>
-   </properties>
-  </object>
+  <object id="158" x="384" y="912" width="64" height="48"/>
   <object id="184" x="512" y="1008" width="64" height="48"/>
  </objectgroup>
  <objectgroup color="#ffffff" name="box">

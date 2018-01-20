@@ -8,7 +8,7 @@ import com.introfog.GameSystem;
 import com.introfog.MyGame;
 import com.introfog.addition.parsers.ParseLevel;
 import com.introfog.addition.parsers.ParseSettings;
-import com.introfog.mesh.objects.GameObject;
+import com.introfog.mesh.objects.*;
 import com.introfog.messages.*;
 import com.introfog.render.Render;
 import com.introfog.screens.SelectedModeScreen;
