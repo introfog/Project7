@@ -1,6 +1,5 @@
 package com.introfog.render;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -36,7 +35,7 @@ public class Render{
 		renderList.forEach ((tmp) -> {
 			if (Character.getInstance ().getTopSpriteY () - GameObject.UNIT < tmp.sprite.getY () &&
 					tmp.sprite.getY () < Character.getInstance ().getTopSpriteY ()){
-				if (tmp.sprite.getX () + tmp.sprite.getWidth () / 2 < Character.getInstance ().getCenterSpriteX () + GameObject.UNIT&&
+				if (tmp.sprite.getX () + tmp.sprite.getWidth () / 2 < Character.getInstance ().getCenterSpriteX () + GameObject.UNIT &&
 						Character.getInstance ().getCenterSpriteX () - GameObject.UNIT < tmp.sprite.getX () + tmp.sprite.getWidth () / 2){
 					tmp.useAlphaModulation = true;
 				}

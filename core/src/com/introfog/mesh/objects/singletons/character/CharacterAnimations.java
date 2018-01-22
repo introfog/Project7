@@ -26,7 +26,7 @@ public class CharacterAnimations extends Character{
 			stand[i] = new ObjectAnimation (path + "stand/stand_" + Direction.values ()[i] + ".png", region,
 					region, CHARACTER_W, CHARACTER_H, 0.2f);
 			walk[i] = new ObjectAnimation (path + "walk/walk_" + Direction.values ()[i] + ".png", region,
-					region, CHARACTER_W, CHARACTER_H, 0.06f);
+					region, CHARACTER_W, CHARACTER_H, 0.2f);
 		}
 		
 		dataRender = new DataRender ();
